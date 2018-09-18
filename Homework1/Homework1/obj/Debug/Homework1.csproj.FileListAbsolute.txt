@@ -1,0 +1,10 @@
+D:\學業檔案\大四上\視窗程式設計\Homework1\Homework1\bin\Debug\Homework1.exe.config
+D:\學業檔案\大四上\視窗程式設計\Homework1\Homework1\bin\Debug\Homework1.exe
+D:\學業檔案\大四上\視窗程式設計\Homework1\Homework1\bin\Debug\Homework1.pdb
+D:\學業檔案\大四上\視窗程式設計\Homework1\Homework1\obj\Debug\Homework1.csprojAssemblyReference.cache
+D:\學業檔案\大四上\視窗程式設計\Homework1\Homework1\obj\Debug\Homework1.Form1.resources
+D:\學業檔案\大四上\視窗程式設計\Homework1\Homework1\obj\Debug\Homework1.Properties.Resources.resources
+D:\學業檔案\大四上\視窗程式設計\Homework1\Homework1\obj\Debug\Homework1.csproj.GenerateResource.cache
+D:\學業檔案\大四上\視窗程式設計\Homework1\Homework1\obj\Debug\Homework1.csproj.CoreCompileInputs.cache
+D:\學業檔案\大四上\視窗程式設計\Homework1\Homework1\obj\Debug\Homework1.exe
+D:\學業檔案\大四上\視窗程式設計\Homework1\Homework1\obj\Debug\Homework1.pdb
