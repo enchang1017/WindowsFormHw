@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Homework1
+namespace Homework1.Model
 {
     public class Meal
     {
-
         public Meal(string mealName , int mealPrice)
         {
             this._mealName = mealName;

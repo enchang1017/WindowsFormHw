@@ -31,10 +31,12 @@
             this._orderDataGridView = new System.Windows.Forms.DataGridView();
             this._totalLabel = new System.Windows.Forms.Label();
             this._mealGroupBox = new System.Windows.Forms.GroupBox();
-            this._pageLabel = new System.Windows.Forms.Label();
-            this._nextPageButton = new System.Windows.Forms.Button();
-            this._previousPageButton = new System.Windows.Forms.Button();
             this._addButton = new System.Windows.Forms.Button();
+            this._previousPageButton = new System.Windows.Forms.Button();
+            this._nextPageButton = new System.Windows.Forms.Button();
+            this._pageLabel = new System.Windows.Forms.Label();
+            this._orderNameColumns = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._orderPriceColumns = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this._orderDataGridView)).BeginInit();
             this._mealGroupBox.SuspendLayout();
             this.SuspendLayout();
@@ -42,18 +44,23 @@
             // _orderDataGridView
             // 
             this._orderDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this._orderDataGridView.Location = new System.Drawing.Point(565, 26);
+            this._orderDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this._orderNameColumns,
+            this._orderPriceColumns});
+            this._orderDataGridView.Location = new System.Drawing.Point(565, 24);
             this._orderDataGridView.Name = "_orderDataGridView";
-            this._orderDataGridView.Size = new System.Drawing.Size(543, 674);
+            this._orderDataGridView.Size = new System.Drawing.Size(543, 622);
             this._orderDataGridView.TabIndex = 0;
             // 
             // _totalLabel
             // 
             this._totalLabel.AutoSize = true;
             this._totalLabel.BackColor = System.Drawing.SystemColors.Control;
-            this._totalLabel.Location = new System.Drawing.Point(895, 718);
+            this._totalLabel.Font = new System.Drawing.Font("新細明體", 20F, System.Drawing.FontStyle.Bold);
+            this._totalLabel.ForeColor = System.Drawing.Color.DarkRed;
+            this._totalLabel.Location = new System.Drawing.Point(950, 659);
             this._totalLabel.Name = "_totalLabel";
-            this._totalLabel.Size = new System.Drawing.Size(39, 13);
+            this._totalLabel.Size = new System.Drawing.Size(89, 27);
             this._totalLabel.TabIndex = 1;
             this._totalLabel.Text = "Label1";
             this._totalLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -64,54 +71,71 @@
             this._mealGroupBox.Controls.Add(this._previousPageButton);
             this._mealGroupBox.Controls.Add(this._nextPageButton);
             this._mealGroupBox.Controls.Add(this._pageLabel);
-            this._mealGroupBox.Location = new System.Drawing.Point(12, 26);
+            this._mealGroupBox.Location = new System.Drawing.Point(12, 24);
             this._mealGroupBox.Name = "_mealGroupBox";
-            this._mealGroupBox.Size = new System.Drawing.Size(515, 674);
+            this._mealGroupBox.Size = new System.Drawing.Size(515, 622);
             this._mealGroupBox.TabIndex = 2;
             this._mealGroupBox.TabStop = false;
-            this._mealGroupBox.Text = "groupBox1";
+            this._mealGroupBox.Text = "Meal";
+            // 
+            // _addButton
+            // 
+            this._addButton.Location = new System.Drawing.Point(389, 549);
+            this._addButton.Name = "_addButton";
+            this._addButton.Size = new System.Drawing.Size(120, 21);
+            this._addButton.TabIndex = 3;
+            this._addButton.Text = "Add";
+            this._addButton.UseVisualStyleBackColor = true;
+            this._addButton.Click += new System.EventHandler(this.AddButtonClick);
+            // 
+            // _previousPageButton
+            // 
+            this._previousPageButton.Location = new System.Drawing.Point(238, 587);
+            this._previousPageButton.Name = "_previousPageButton";
+            this._previousPageButton.Size = new System.Drawing.Size(120, 21);
+            this._previousPageButton.TabIndex = 2;
+            this._previousPageButton.Text = "Previous Page";
+            this._previousPageButton.UseVisualStyleBackColor = true;
+            this._previousPageButton.Click += new System.EventHandler(this.ClickPreviousPageButton);
+            // 
+            // _nextPageButton
+            // 
+            this._nextPageButton.Location = new System.Drawing.Point(389, 587);
+            this._nextPageButton.Name = "_nextPageButton";
+            this._nextPageButton.Size = new System.Drawing.Size(120, 21);
+            this._nextPageButton.TabIndex = 1;
+            this._nextPageButton.Text = "Next Page";
+            this._nextPageButton.UseVisualStyleBackColor = true;
+            this._nextPageButton.Click += new System.EventHandler(this.ClickNextPageButton);
             // 
             // _pageLabel
             // 
             this._pageLabel.AutoSize = true;
-            this._pageLabel.Location = new System.Drawing.Point(17, 646);
+            this._pageLabel.Font = new System.Drawing.Font("新細明體", 16F);
+            this._pageLabel.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+            this._pageLabel.Location = new System.Drawing.Point(17, 580);
             this._pageLabel.Name = "_pageLabel";
-            this._pageLabel.Size = new System.Drawing.Size(35, 13);
+            this._pageLabel.Size = new System.Drawing.Size(60, 22);
             this._pageLabel.TabIndex = 0;
             this._pageLabel.Text = "label1";
             // 
-            // _nextPageButton
+            // _orderNameColumns
             // 
-            this._nextPageButton.Location = new System.Drawing.Point(389, 636);
-            this._nextPageButton.Name = "_nextPageButton";
-            this._nextPageButton.Size = new System.Drawing.Size(75, 23);
-            this._nextPageButton.TabIndex = 1;
-            this._nextPageButton.Text = "button1";
-            this._nextPageButton.UseVisualStyleBackColor = true;
+            this._orderNameColumns.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this._orderNameColumns.HeaderText = "Name";
+            this._orderNameColumns.Name = "_orderNameColumns";
             // 
-            // _previousPageButton
+            // _orderPriceColumns
             // 
-            this._previousPageButton.Location = new System.Drawing.Point(238, 636);
-            this._previousPageButton.Name = "_previousPageButton";
-            this._previousPageButton.Size = new System.Drawing.Size(75, 23);
-            this._previousPageButton.TabIndex = 2;
-            this._previousPageButton.Text = "button2";
-            this._previousPageButton.UseVisualStyleBackColor = true;
-            // 
-            // _addButton
-            // 
-            this._addButton.Location = new System.Drawing.Point(389, 595);
-            this._addButton.Name = "_addButton";
-            this._addButton.Size = new System.Drawing.Size(75, 23);
-            this._addButton.TabIndex = 3;
-            this._addButton.Text = "button3";
-            this._addButton.UseVisualStyleBackColor = true;
+            this._orderPriceColumns.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this._orderPriceColumns.HeaderText = "Unit Price";
+            this._orderPriceColumns.Name = "_orderPriceColumns";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1133, 767);
+            this.ClientSize = new System.Drawing.Size(1133, 708);
             this.Controls.Add(this._mealGroupBox);
             this.Controls.Add(this._totalLabel);
             this.Controls.Add(this._orderDataGridView);
@@ -134,6 +158,8 @@
         private System.Windows.Forms.Button _previousPageButton;
         private System.Windows.Forms.Button _nextPageButton;
         private System.Windows.Forms.Label _pageLabel;
+        private System.Windows.Forms.DataGridViewTextBoxColumn _orderNameColumns;
+        private System.Windows.Forms.DataGridViewTextBoxColumn _orderPriceColumns;
     }
 }
 

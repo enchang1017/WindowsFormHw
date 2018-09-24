@@ -1,27 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Homework1
+namespace Homework1.Model
 {
     public class MealListFactory
     {
-        private List<Meal> _mealsList;
-
-        const string MACKERELSUSHIROAST = "烤鯖魚押壽司";
-        const int LOWERPRICE = 40;
-
+        const char SPLIT_CONDITION = ' ';
         /// <summary>
-        /// 菜單生成
+        /// 開檔讀檔 並寫入mealList
         /// </summary>
         /// <returns></returns>
-        public List<Meal> CreateMealList()
+        public List<Meal> ReadData()
         {
-            Meal mackerelSushiRoast = new Meal(MACKERELSUSHIROAST, LOWERPRICE);
-
-            return _mealsList;
+            List<Meal> mealList = new List<Meal>();
+            StreamReader streamReader = new StreamReader(@"..\..\..\Data\MealData.txt");
+            while (!streamReader.EndOfStream)
+            {
+                string Access = streamReader.ReadLine();
+                string[] splitAccess = Access.Split(SPLIT_CONDITION);
+                mealList.Add(new Meal(splitAccess[0], Int32.Parse(splitAccess[1])));
+            }
+            streamReader.Close();
+            return mealList;
         }
     }
 }
