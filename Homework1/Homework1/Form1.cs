@@ -20,10 +20,11 @@ namespace Homework1
         const string NAME = "Name";
         const string UNIT_PRICE = "Unit Price";
         const string DOLLARS = "元";
+        const string INITIAL = "";
         private Homework1.Model.FormData _formData = new Model.FormData();
         private List<Button> _mealButtonList = new List<Button>();
         private Homework1.Model.Model _model = new Model.Model();
-        private Homework1.Model.Meal _meal = new Model.Meal("",0);
+        private Homework1.Model.Meal _meal = new Model.Meal(INITIAL, 0);
         private DataTable _dataTable = new DataTable();
         public Form1(Homework1.Model.FormData formData)
         {
@@ -158,9 +159,13 @@ namespace Homework1
         /// <param name="e"></param>
         private void AddButtonClick(object sender, EventArgs e)
         {
-            _model.SetTotalPrice(_formData,_meal);
-            _totalLabel.Text = _model.SetTotalPriceLabel(_formData);
-            _orderDataGridView.Rows.Add(_meal._mealName,_meal._mealPrice);
+            if (_model.GetOrderStatus(_meal))
+            {
+                _model.SetTotalPrice(_formData, _meal);
+                _totalLabel.Text = _model.SetTotalPriceLabel(_formData);
+                _orderDataGridView.Rows.Add(_meal._mealName, _meal._mealPrice);
+                _meal = new Model.Meal(INITIAL,0);
+            }
         }
 
         /// <summary>

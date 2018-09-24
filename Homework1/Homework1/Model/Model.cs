@@ -17,6 +17,7 @@ namespace Homework1.Model
         const string NEXT_BUTTON = "_nextPageButton";
         const string WRAP = "\n";
         const string MONEY_SYMBOL = "$";
+        const string INITIAL = "";
         /// <summary>
         /// 建立菜單
         /// </summary>
@@ -124,6 +125,19 @@ namespace Homework1.Model
             MealListFactory mealListFactory = new MealListFactory();
             formData.totalPage = mealListFactory.ReadData().Count / MAX_MEAL_BUTTON_NUMBER + 1;
             return mealListFactory.ReadData();
+        }
+
+        /// <summary>
+        /// 判斷是否現在有選擇的餐點
+        /// </summary>
+        /// <returns></returns>
+        public bool GetOrderStatus(Homework1.Model.Meal meal)
+        {
+            if (meal._mealName == INITIAL && meal._mealPrice == 0)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
