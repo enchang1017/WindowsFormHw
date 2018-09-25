@@ -46,20 +46,6 @@ namespace Homework1.Model
         }
 
         /// <summary>
-        /// 設定下一頁按鈕是否Enable
-        /// </summary>
-        /// <param name="formData"></param>
-        /// <returns></returns>
-        public bool SetNextPageButtonEnable(Homework1.Model.FormData formData)
-        {
-            if (formData.nowPage == formData.totalPage)
-            {
-                return false;
-            }
-            return true;
-        }
-
-        /// <summary>
         /// 設定上一頁按鈕是否Enable
         /// </summary>
         /// <param name="formData"></param>
@@ -125,19 +111,6 @@ namespace Homework1.Model
             MealListFactory mealListFactory = new MealListFactory();
             formData.totalPage = mealListFactory.ReadData().Count / MAX_MEAL_BUTTON_NUMBER + 1;
             return mealListFactory.ReadData();
-        }
-
-        /// <summary>
-        /// 判斷是否現在有選擇的餐點
-        /// </summary>
-        /// <returns></returns>
-        public bool GetOrderStatus(Homework1.Model.Meal meal)
-        {
-            if (meal._mealName == INITIAL && meal._mealPrice == 0)
-            {
-                return false;
-            }
-            return true;
         }
     }
 }

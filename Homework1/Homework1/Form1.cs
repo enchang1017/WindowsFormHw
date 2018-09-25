@@ -25,7 +25,7 @@ namespace Homework1
         private List<Button> _mealButtonList = new List<Button>();
         private Homework1.Model.Model _model = new Model.Model();
         private Homework1.Model.Meal _meal = new Model.Meal(INITIAL, 0);
-        private DataTable _dataTable = new DataTable();
+        private Homework1.Model.Order _order = new Model.Order();
         public Form1(Homework1.Model.FormData formData)
         {
             InitializeComponent();
@@ -58,7 +58,7 @@ namespace Homework1
         /// </summary>
         public void SetPageButtonEnable()
         {
-            _nextPageButton.Enabled = _model.SetNextPageButtonEnable(_formData);
+            _nextPageButton.Enabled = _formData.SetNextPageButtonEnable();
             if (_formData.nowPage == 1)
             {
                 _previousPageButton.Enabled = false;
@@ -159,7 +159,7 @@ namespace Homework1
         /// <param name="e"></param>
         private void AddButtonClick(object sender, EventArgs e)
         {
-            if (_model.GetOrderStatus(_meal))
+            if (_order.GetOrderStatus(_meal._mealName,_meal._mealPrice))
             {
                 _model.SetTotalPrice(_formData, _meal);
                 _totalLabel.Text = _model.SetTotalPriceLabel(_formData);

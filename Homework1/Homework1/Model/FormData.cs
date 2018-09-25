@@ -39,5 +39,17 @@ namespace Homework1.Model
             set;
         }
 
+        /// <summary>
+        /// 設定下一頁按鈕是否Enable
+        /// </summary>
+        /// <returns></returns>
+        public bool SetNextPageButtonEnable()
+        {
+            if (this.nowPage == this.totalPage)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }
