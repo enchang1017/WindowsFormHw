@@ -4,20 +4,12 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Homework1.Model;
 
 namespace Homework1.Model
 {
     public class Model
     {
-        const string PAGE_LABEL_TEXT_PAGE = "Page:";
-        const string SLASH = "/";
-        const int MAX_MEAL_BUTTON_NUMBER = 9;
-        const string TOTAL_PRICE = "Total : ";
-        const string DOLLARS = "元";
-        const string NEXT_BUTTON = "_nextPageButton";
-        const string WRAP = "\n";
-        const string MONEY_SYMBOL = "$";
-        const string INITIAL = "";
         /// <summary>
         /// 建立菜單
         /// </summary>
@@ -25,7 +17,7 @@ namespace Homework1.Model
         public List<Meal> CreateMeal(Homework1.Model.FormData formData)
         {
             MealListFactory mealListFactory = new MealListFactory();
-            formData.totalPage = mealListFactory.ReadData().Count / MAX_MEAL_BUTTON_NUMBER + 1;
+            formData.totalPage = mealListFactory.ReadData().Count / Constant.MAX_MEAL_BUTTON_NUMBER + 1;
             return mealListFactory.ReadData();
         }
 
@@ -35,7 +27,7 @@ namespace Homework1.Model
         /// <param name="formData"></param>
         public void UpdateNowPage(Homework1.Model.FormData formData, string buttonName)
         {
-            if (buttonName == NEXT_BUTTON)
+            if (buttonName == Constant.NEXT_BUTTON)
             {
                 formData.nowPage += 1;
             }
@@ -64,9 +56,9 @@ namespace Homework1.Model
         /// </summary>
         /// <param name="formData"></param>
         /// <returns></returns>
-        public string SetPageLabelText(Homework1.Model.FormData formData)
+        public string SetPageLabelText(int nowPage, int totalPage)
         {
-            return PAGE_LABEL_TEXT_PAGE + formData.nowPage + SLASH + formData.totalPage;
+            return Constant.PAGE_LABEL_TEXT_PAGE + nowPage + Constant.SLASH + totalPage;
         }
 
         /// <summary>
@@ -76,7 +68,7 @@ namespace Homework1.Model
         /// <returns></returns>
         public string SetTotalPriceLabel(Homework1.Model.FormData formData)
         {
-            return TOTAL_PRICE + formData.totalPrice + DOLLARS;
+            return Constant.TOTAL_PRICE + formData.totalPrice + Constant.DOLLARS;
         }
 
         /// <summary>
@@ -98,7 +90,7 @@ namespace Homework1.Model
         /// <returns></returns>
         public string SetMealButtonText(int mealButtonListIndex, Homework1.Model.FormData formData)
         {
-            return CreateMeal(formData)[mealButtonListIndex]._mealName + WRAP + MONEY_SYMBOL + CreateMeal(formData)[mealButtonListIndex]._mealPrice + DOLLARS;
+            return CreateMeal(formData)[mealButtonListIndex]._mealName + Constant.WRAP + Constant.MONEY_SYMBOL + CreateMeal(formData)[mealButtonListIndex]._mealPrice + Constant.DOLLARS;
         }
 
         /// <summary>
@@ -109,7 +101,7 @@ namespace Homework1.Model
         public List<Meal> ReadFile(Homework1.Model.FormData formData)
         {
             MealListFactory mealListFactory = new MealListFactory();
-            formData.totalPage = mealListFactory.ReadData().Count / MAX_MEAL_BUTTON_NUMBER + 1;
+            formData.totalPage = mealListFactory.ReadData().Count / Constant.MAX_MEAL_BUTTON_NUMBER + 1;
             return mealListFactory.ReadData();
         }
     }

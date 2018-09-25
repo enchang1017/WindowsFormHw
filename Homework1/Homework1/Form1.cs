@@ -7,24 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Homework1.Model;
 
 namespace Homework1
 {
     public partial class Form1 : Form
     {
-        const int INITIAL_X = 6;
-        const int INITIAL_Y = 21;
-        const int SPACING = 179;
-        const int MAX_ROW_NUMBER = 3;
-        const int BUTTON_SIZE = 145;
-        const string NAME = "Name";
-        const string UNIT_PRICE = "Unit Price";
-        const string DOLLARS = "元";
-        const string INITIAL = "";
         private Homework1.Model.FormData _formData = new Model.FormData();
         private List<Button> _mealButtonList = new List<Button>();
         private Homework1.Model.Model _model = new Model.Model();
-        private Homework1.Model.Meal _meal = new Model.Meal(INITIAL, 0);
+        private Homework1.Model.Meal _meal = new Model.Meal(Constant.INITIAL, 0);
         private Homework1.Model.Order _order = new Model.Order();
         public Form1(Homework1.Model.FormData formData)
         {
@@ -38,7 +30,7 @@ namespace Homework1
                 _mealButtonList.Add(new Button());
                 _mealGroupBox.Controls.Add(_mealButtonList[i]);
                 _mealButtonList[i].Text = _model.SetMealButtonText(i,_formData);
-                _mealButtonList[i].Size = new Size(BUTTON_SIZE, BUTTON_SIZE);
+                _mealButtonList[i].Size = new Size(Constant.BUTTON_SIZE, Constant.BUTTON_SIZE);
                 _mealButtonList[i].Name = i.ToString();
                 _mealButtonList[i].Click += new EventHandler(this.MealButtonClick);
             }
@@ -49,7 +41,7 @@ namespace Homework1
             SetPageButtonEnable();
             SetPageButtonEnable();
             #endregion
-            _pageLabel.Text = _model.SetPageLabelText(_formData);
+            _pageLabel.Text = _model.SetPageLabelText(_formData.nowPage, _formData.totalPage);
             _totalLabel.Text = _model.SetTotalPriceLabel(_formData);
             SetDataGridViewInitial();
         }
@@ -77,17 +69,17 @@ namespace Homework1
             Homework1.View.Tools.MealButtonOption mealButtonOption = new View.Tools.MealButtonOption();
             for (int i = 0; i < mealList.Count; i++)
             {
-                if (i % MAX_ROW_NUMBER == 0)
+                if (i % Constant.MAX_ROW_NUMBER == 0)
                 {
-                    _mealButtonList[i].Location = new System.Drawing.Point(INITIAL_X, INITIAL_Y + mealButtonOption.GetVariable(i));
+                    _mealButtonList[i].Location = new System.Drawing.Point(Constant.INITIAL_X, Constant.INITIAL_Y + mealButtonOption.GetVariable(i));
                 }
-                else if (i % MAX_ROW_NUMBER == 1)
+                else if (i % Constant.MAX_ROW_NUMBER == 1)
                 {
-                    _mealButtonList[i].Location = new System.Drawing.Point(INITIAL_X + SPACING, INITIAL_Y + mealButtonOption.GetVariable(i));
+                    _mealButtonList[i].Location = new System.Drawing.Point(Constant.INITIAL_X + Constant.SPACING, Constant.INITIAL_Y + mealButtonOption.GetVariable(i));
                 }
                 else
                 {
-                    _mealButtonList[i].Location = new System.Drawing.Point(INITIAL_X + SPACING + SPACING, INITIAL_Y + mealButtonOption.GetVariable(i));
+                    _mealButtonList[i].Location = new System.Drawing.Point(Constant.INITIAL_X + Constant.SPACING + Constant.SPACING, Constant.INITIAL_Y + mealButtonOption.GetVariable(i));
                 }
             }
         }
@@ -124,7 +116,7 @@ namespace Homework1
             SetMealButtonOption();
             SetPageButtonEnable();
             SetPageButtonEnable();
-            _pageLabel.Text = _model.SetPageLabelText(_formData);
+            _pageLabel.Text = _model.SetPageLabelText(_formData.nowPage, _formData.totalPage);
         }
 
         /// <summary>
@@ -138,7 +130,7 @@ namespace Homework1
             SetMealButtonOption();
             SetPageButtonEnable();
             SetPageButtonEnable();
-            _pageLabel.Text = _model.SetPageLabelText(_formData);
+            _pageLabel.Text = _model.SetPageLabelText(_formData.nowPage, _formData.totalPage);
         }
 
         /// <summary>
@@ -164,7 +156,7 @@ namespace Homework1
                 _model.SetTotalPrice(_formData, _meal);
                 _totalLabel.Text = _model.SetTotalPriceLabel(_formData);
                 _orderDataGridView.Rows.Add(_meal._mealName, _meal._mealPrice);
-                _meal = new Model.Meal(INITIAL,0);
+                _meal = new Model.Meal(Constant.INITIAL, 0);
             }
         }
 

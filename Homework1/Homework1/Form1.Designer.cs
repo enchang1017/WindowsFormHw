@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             this._orderDataGridView = new System.Windows.Forms.DataGridView();
+            this._orderNameColumns = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._orderPriceColumns = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this._totalLabel = new System.Windows.Forms.Label();
             this._mealGroupBox = new System.Windows.Forms.GroupBox();
             this._addButton = new System.Windows.Forms.Button();
             this._previousPageButton = new System.Windows.Forms.Button();
             this._nextPageButton = new System.Windows.Forms.Button();
             this._pageLabel = new System.Windows.Forms.Label();
-            this._orderNameColumns = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this._orderPriceColumns = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this._orderDataGridView)).BeginInit();
             this._mealGroupBox.SuspendLayout();
             this.SuspendLayout();
@@ -49,8 +49,21 @@
             this._orderPriceColumns});
             this._orderDataGridView.Location = new System.Drawing.Point(565, 24);
             this._orderDataGridView.Name = "_orderDataGridView";
+            this._orderDataGridView.RowHeadersVisible = false;
             this._orderDataGridView.Size = new System.Drawing.Size(543, 622);
             this._orderDataGridView.TabIndex = 0;
+            // 
+            // _orderNameColumns
+            // 
+            this._orderNameColumns.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this._orderNameColumns.HeaderText = "Name";
+            this._orderNameColumns.Name = "_orderNameColumns";
+            // 
+            // _orderPriceColumns
+            // 
+            this._orderPriceColumns.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this._orderPriceColumns.HeaderText = "Unit Price";
+            this._orderPriceColumns.Name = "_orderPriceColumns";
             // 
             // _totalLabel
             // 
@@ -118,18 +131,6 @@
             this._pageLabel.Size = new System.Drawing.Size(60, 22);
             this._pageLabel.TabIndex = 0;
             this._pageLabel.Text = "label1";
-            // 
-            // _orderNameColumns
-            // 
-            this._orderNameColumns.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this._orderNameColumns.HeaderText = "Name";
-            this._orderNameColumns.Name = "_orderNameColumns";
-            // 
-            // _orderPriceColumns
-            // 
-            this._orderPriceColumns.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this._orderPriceColumns.HeaderText = "Unit Price";
-            this._orderPriceColumns.Name = "_orderPriceColumns";
             // 
             // Form1
             // 
