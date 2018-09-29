@@ -8,42 +8,49 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Homework1.Model;
+using Homework1.View.PresentationModel;
 
 namespace Homework1
 {
-    public partial class Form1 : Form
+    public partial class CustomerSide : Form
     {
-        private Homework1.Model.FormData _formData = new Model.FormData();
+        private FormData _formData = new FormData();
         private List<Button> _mealButtonList = new List<Button>();
-        private Homework1.Model.Model _model = new Model.Model();
-        private Homework1.Model.Meal _meal = new Model.Meal(Constant.INITIAL, 0);
-        private Homework1.Model.Order _order = new Model.Order();
-        public Form1(Homework1.Model.FormData formData)
+        private CustomerForm _customerForm = new CustomerForm();
+        private Meal _meal = new Model.Meal(Constant.INITIAL, 0);
+        private Order _order = new Model.Order();
+        private List<Meal> _mealOrderList = new List<Meal>();
+        private SetUpForm _setUpForm = new SetUpForm();
+        public CustomerSide(FormData formData,SetUpForm setUpForm)
         {
             InitializeComponent();
-            _model.ReadFile(_formData);
+            _setUpForm = setUpForm;
+            _customerForm.ReadFile(_formData);
             this._formData = formData;
             #region Meal Button init
             #region Create Button List
-            for (int i = 0; i < _model.ReadFile(_formData).Count; i++)
+            for (int i = 0; i < _customerForm.ReadFile(_formData).Count; i++)
             {
                 _mealButtonList.Add(new Button());
                 _mealGroupBox.Controls.Add(_mealButtonList[i]);
-                _mealButtonList[i].Text = _model.SetMealButtonText(i,_formData);
+                _mealButtonList[i].Text = _customerForm.SetMealButtonText(i,_formData);
                 _mealButtonList[i].Size = new Size(Constant.BUTTON_SIZE, Constant.BUTTON_SIZE);
                 _mealButtonList[i].Name = i.ToString();
                 _mealButtonList[i].Click += new EventHandler(this.MealButtonClick);
+                _mealButtonList[i].Image = System.Drawing.Image.FromFile(@"..\..\..\img\MealButtonImg\" + i + Constant.GET_PICTURE);
+                _mealButtonList[i].TextAlign = ContentAlignment.BottomLeft;
+                _mealButtonList[i].ForeColor = Color.White;
             }
-            Homework1.View.Tools.MealButtonOption mealButtonOption = new View.Tools.MealButtonOption();
-            SetMealButtonLocation(_model.ReadFile(_formData));
+            MealButtonOption mealButtonOption = new MealButtonOption();
+            SetMealButtonLocation(_customerForm.ReadFile(_formData));
             #endregion
             SetMealButtonOption();
             SetPageButtonEnable();
             SetPageButtonEnable();
             #endregion
-            _pageLabel.Text = _model.SetPageLabelText(_formData.nowPage, _formData.totalPage);
-            _totalLabel.Text = _model.SetTotalPriceLabel(_formData);
-            SetDataGridViewInitial();
+            _pageLabel.Text = _customerForm.SetPageLabelText(_formData.nowPage, _formData.totalPage);
+            _totalLabel.Text = _customerForm.SetTotalPriceLabel(_formData);
+            //this.FormClosing();
         }
         /// <summary>
         /// 設定頁面按鈕狀態
@@ -66,7 +73,7 @@ namespace Homework1
         /// </summary>
         public void SetMealButtonLocation(List<Homework1.Model.Meal> mealList)
         {
-            Homework1.View.Tools.MealButtonOption mealButtonOption = new View.Tools.MealButtonOption();
+            MealButtonOption mealButtonOption = new MealButtonOption();
             for (int i = 0; i < mealList.Count; i++)
             {
                 if (i % Constant.MAX_ROW_NUMBER == 0)
@@ -89,7 +96,7 @@ namespace Homework1
         /// </summary>
         public void SetMealButtonOption()
         {
-            Homework1.View.Tools.MealButtonOption mealButtonOption = new View.Tools.MealButtonOption();
+            MealButtonOption mealButtonOption = new MealButtonOption();
             for (int i = 0; i < _mealButtonList.Count; i++)
             {
                 if (mealButtonOption.GetButtonOption(_mealButtonList.Count, i, _formData))
@@ -112,11 +119,11 @@ namespace Homework1
         /// <param name="e"></param>
         private void ClickPreviousPageButton(object sender, EventArgs e)
         {
-            _model.UpdateNowPage(_formData, _previousPageButton.Name);
+            _customerForm.UpdateNowPage(_formData, _previousPageButton.Name);
             SetMealButtonOption();
             SetPageButtonEnable();
             SetPageButtonEnable();
-            _pageLabel.Text = _model.SetPageLabelText(_formData.nowPage, _formData.totalPage);
+            _pageLabel.Text = _customerForm.SetPageLabelText(_formData.nowPage, _formData.totalPage);
         }
 
         /// <summary>
@@ -126,11 +133,11 @@ namespace Homework1
         /// <param name="e"></param>
         private void ClickNextPageButton(object sender, EventArgs e)
         {
-            _model.UpdateNowPage(_formData, _nextPageButton.Name);
+            _customerForm.UpdateNowPage(_formData, _nextPageButton.Name);
             SetMealButtonOption();
             SetPageButtonEnable();
             SetPageButtonEnable();
-            _pageLabel.Text = _model.SetPageLabelText(_formData.nowPage, _formData.totalPage);
+            _pageLabel.Text = _customerForm.SetPageLabelText(_formData.nowPage, _formData.totalPage);
         }
 
         /// <summary>
@@ -141,7 +148,8 @@ namespace Homework1
         private void MealButtonClick(object sender, EventArgs e)
         {
             Button button = sender as Button;
-            _meal = _model.ReadFile(_formData)[Int32.Parse(button.Name)];
+            _meal = _customerForm.ReadFile(_formData)[Int32.Parse(button.Name)];
+            _mealDescriptionBox.Text = _meal._mealDescription;
         }
 
         /// <summary>
@@ -151,22 +159,43 @@ namespace Homework1
         /// <param name="e"></param>
         private void AddButtonClick(object sender, EventArgs e)
         {
-            if (_order.GetOrderStatus(_meal._mealName,_meal._mealPrice))
+            if (_meal.IsMealInitial(_meal))
             {
-                _model.SetTotalPrice(_formData, _meal);
-                _totalLabel.Text = _model.SetTotalPriceLabel(_formData);
-                _orderDataGridView.Rows.Add(_meal._mealName, _meal._mealPrice);
-                _meal = new Model.Meal(Constant.INITIAL, 0);
+                _orderDataGridView.Rows.Add(Constant.DELETE,_meal._mealName, _meal._mealPrice);
+                _mealOrderList.Add(_meal);
+                //_formData.totalPrice = _order.SetTotalOrderListPrice(_formData.totalPrice);
+                _formData.SetTotalOrderListPrice(_mealOrderList);
+                _totalLabel.Text = _customerForm.SetTotalPriceLabel(_formData);
+                _meal = new Meal(Constant.INITIAL, 0);
             }
         }
 
         /// <summary>
-        /// 設定DataGridView初始化
+        /// DataGridView Delete Button Click Event
         /// </summary>
-        private void SetDataGridViewInitial()
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ClickDataGridViewCellContent(object sender, DataGridViewCellEventArgs e)
         {
-            _orderDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            _orderDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            var senderGrid = (DataGridView)sender;
+
+            if (senderGrid.Columns[e.ColumnIndex] == _deleteButton && e.RowIndex < _mealOrderList.Count)
+            {
+                _orderDataGridView.Rows.Remove(_orderDataGridView.Rows[e.RowIndex]);
+                _mealOrderList.RemoveAt(e.RowIndex);
+                //_formData.totalPrice = _order.SetTotalOrderListPrice(_formData.totalPrice);
+                _formData.SetTotalOrderListPrice(_mealOrderList);
+                _totalLabel.Text = _customerForm.SetTotalPriceLabel(_formData);
+            }
+        }
+
+        /// <summary>
+        /// 複寫右上角X按鈕，開啟SetUpForm按鈕狀態
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            _setUpForm.SetCustomerSideButtonStatus();
         }
     }
 }

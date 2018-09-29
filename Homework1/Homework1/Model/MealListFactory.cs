@@ -25,7 +25,25 @@ namespace Homework1.Model
                 mealList.Add(new Meal(splitAccess[0], Int32.Parse(splitAccess[1])));
             }
             streamReader.Close();
+            SetMealDescription(mealList);
             return mealList;
+        }
+
+        /// <summary>
+        /// 設定菜單簡介
+        /// </summary>
+        /// <param name="mealList"></param>
+        public void SetMealDescription(List<Meal> mealList)
+        {
+            int count = 0;
+            StreamReader streamReader = new StreamReader(@"..\..\..\Data\MealDescription.txt");
+            while (!streamReader.EndOfStream)
+            {
+                string Access = streamReader.ReadLine();
+                mealList[count]._mealDescription = Access;
+                count++;
+            }
+            streamReader.Close();
         }
     }
 }

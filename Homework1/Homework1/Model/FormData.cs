@@ -51,5 +51,19 @@ namespace Homework1.Model
             }
             return true;
         }
+
+        /// <summary>
+        /// 計算總價
+        /// </summary>
+        /// <param name="formData"></param>
+        public int SetTotalOrderListPrice(List<Meal> orderMeal)
+        {
+            totalPrice = 0;
+            foreach (Meal meal in orderMeal)
+            {
+                totalPrice += meal._mealPrice;
+            }
+            return totalPrice;
+        }
     }
 }

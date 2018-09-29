@@ -24,5 +24,7 @@ namespace Homework1.Model
         public const string NEXT_BUTTON = "_nextPageButton";
         public const string WRAP = "\n";
         public const string MONEY_SYMBOL = "$";
+        public const string DELETE = "X";
+        public const string GET_PICTURE = ".png";
     }
 }

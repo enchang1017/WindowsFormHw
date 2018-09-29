@@ -56,11 +56,23 @@
     <Compile Include="Model\FormData.cs" />
     <Compile Include="Model\Meal.cs" />
     <Compile Include="Model\MealListFactory.cs" />
-    <Compile Include="Model\Model.cs" />
+    <Compile Include="RestaurantSide.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RestaurantSide.Designer.cs">
+      <DependentUpon>RestaurantSide.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SetUpForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SetUpForm.Designer.cs">
+      <DependentUpon>SetUpForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\PresentationModel\CustomerForm.cs" />
     <Compile Include="Model\Order.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="View\Tools\MealButtonOption.cs" />
+    <Compile Include="View\PresentationModel\MealButtonOption.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -73,6 +85,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="RestaurantSide.resx">
+      <DependentUpon>RestaurantSide.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SetUpForm.resx">
+      <DependentUpon>SetUpForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
