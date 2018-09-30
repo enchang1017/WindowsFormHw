@@ -39,19 +39,5 @@ namespace Homework1.Model
             get;
             set;
         }
-
-        /// <summary>
-        /// 判斷是否為初始化
-        /// </summary>
-        /// <param name="meal"></param>
-        /// <returns></returns>
-        public bool IsMealInitial(Meal meal)
-        {
-            if (meal._mealName == Constant.INITIAL && meal._mealPrice == 0)
-            {
-                return false;
-            }
-            return true;
-        }
     }
 }
