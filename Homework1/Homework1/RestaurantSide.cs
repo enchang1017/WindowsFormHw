@@ -29,5 +29,14 @@ namespace Homework1
             _setUpForm.SetRestaurantSideButtonStatus();
             this.Close();
         }
+
+        /// <summary>
+        /// 複寫右上角X按鈕，開啟SetUpForm按鈕狀態
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            _setUpForm.SetRestaurantSideButtonStatus();
+        }
     }
 }
