@@ -18,12 +18,10 @@ namespace Homework1
         private List<Button> _mealButtonList = new List<Button>();
         private CustomerPresentationModel _customerPresentationModel = new CustomerPresentationModel(new CustomerModel());
         private CustomerModel _customerModel = new CustomerModel();
-        private SetUpForm _setUpForm = new SetUpForm();
-        public CustomerSide(FormData formData,SetUpForm setUpForm)
+        public CustomerSide(FormData formData)
         {
             InitializeComponent();
             _customerModel = _customerPresentationModel.GetCustomerModelInstance(); 
-            _setUpForm = setUpForm; 
             this._formData = formData;
             _customerPresentationModel.GetMealList();
             _customerPresentationModel.SetTotalPage(_formData);
@@ -187,15 +185,6 @@ namespace Homework1
                 _formData.SetTotalOrderListPrice(_customerModel.GetOrderList());
                 _totalLabel.Text = _customerPresentationModel.SetTotalPriceLabel(_formData);
             }
-        }
-
-        /// <summary>
-        /// 複寫右上角X按鈕，開啟SetUpForm按鈕狀態
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            _setUpForm.SetCustomerSideButtonStatus();
         }
     }
 }

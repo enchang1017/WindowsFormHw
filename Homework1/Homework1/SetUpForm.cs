@@ -24,9 +24,13 @@ namespace Homework1
         /// <param name="e"></param>
         private void ClickCustomerSideButton(object sender, EventArgs e)
         {
-            Form form = new CustomerSide(new Model.FormData(),this);
-            form.Show(this);
+            Form form = new CustomerSide(new Model.FormData());
             _customerSideButton.Enabled = false;
+            DialogResult dialogResult = form.ShowDialog(); 
+            if (dialogResult == DialogResult.Cancel)
+            {
+                _customerSideButton.Enabled = true;
+            }
         }
 
         /// <summary>
@@ -36,9 +40,14 @@ namespace Homework1
         /// <param name="e"></param>
         private void ClickRestaurantSideButton(object sender, EventArgs e)
         {
-            Form form = new RestaurantSide(this);
-            form.Show();
+            Form form = new RestaurantSide();
             _restaurantSideButton.Enabled = false;
+            DialogResult dialogResult = form.ShowDialog();
+            if (dialogResult == DialogResult.Cancel)
+            {
+                _restaurantSideButton.Enabled = true;
+            }
+
         }
 
         /// <summary>
