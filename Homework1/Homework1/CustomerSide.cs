@@ -57,14 +57,7 @@ namespace Homework1
         public void SetPageButtonEnable()
         {
             _nextPageButton.Enabled = _formData.SetNextPageButtonEnable();
-            if (_formData.nowPage == 1)
-            {
-                _previousPageButton.Enabled = false;
-            }
-            else
-            {
-                _previousPageButton.Enabled = true;
-            }
+            _previousPageButton.Enabled = _customerPresentationModel.SetPreviousPageButtonStatus(_formData);
         }
 
         /// <summary>
@@ -164,7 +157,7 @@ namespace Homework1
         private void AddButtonClick(object sender, EventArgs e)
         {
             _orderDataGridView.Rows.Add(Constant.DELETE, _customerModel.GetSelectedMeal()._mealName, _customerModel.GetSelectedMeal()._mealPrice);
-            _customerModel.SetOrderList(_customerModel.GetSelectedMeal());
+            _customerModel.GetOrderList().Add(_customerModel.GetSelectedMeal());
             _formData.SetTotalOrderListPrice(_customerModel.GetOrderList());
             _totalLabel.Text = _customerPresentationModel.SetTotalPriceLabel(_formData);
         }

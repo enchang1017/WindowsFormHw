@@ -24,13 +24,10 @@ namespace Homework1
         /// <param name="e"></param>
         private void ClickCustomerSideButton(object sender, EventArgs e)
         {
-            Form form = new CustomerSide(new Model.FormData());
+            Form customerSide = new CustomerSide(new Model.FormData());
             _customerSideButton.Enabled = false;
-            DialogResult dialogResult = form.ShowDialog(); 
-            if (dialogResult == DialogResult.Cancel)
-            {
-                _customerSideButton.Enabled = true;
-            }
+            customerSide.Show();
+            customerSide.FormClosed += new FormClosedEventHandler(this.SetCustomerSideButtonStatus);
         }
 
         /// <summary>
@@ -40,14 +37,10 @@ namespace Homework1
         /// <param name="e"></param>
         private void ClickRestaurantSideButton(object sender, EventArgs e)
         {
-            Form form = new RestaurantSide();
+            Form restaurantSide = new RestaurantSide();
+            restaurantSide.Show();
             _restaurantSideButton.Enabled = false;
-            DialogResult dialogResult = form.ShowDialog();
-            if (dialogResult == DialogResult.Cancel)
-            {
-                _restaurantSideButton.Enabled = true;
-            }
-
+            restaurantSide.FormClosed += new FormClosedEventHandler(this.SetRestaurantSideButtonStatus);
         }
 
         /// <summary>
@@ -63,7 +56,7 @@ namespace Homework1
         /// <summary>
         /// 設定Restaurant Button 狀態
         /// </summary>
-        public void SetRestaurantSideButtonStatus()
+        public void SetRestaurantSideButtonStatus(object sender, FormClosedEventArgs e)
         {
             _restaurantSideButton.Enabled = true;
         }
@@ -71,7 +64,7 @@ namespace Homework1
         /// <summary>
         /// 設定前端的按鈕狀態
         /// </summary>
-        public void SetCustomerSideButtonStatus()
+        public void SetCustomerSideButtonStatus(object sender, FormClosedEventArgs e)
         {
             _customerSideButton.Enabled = true;
         }

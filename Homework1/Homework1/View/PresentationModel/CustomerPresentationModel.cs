@@ -114,5 +114,20 @@ namespace Homework1.View.PresentationModel
         {
             return _customerModel;
         }
+
+        /// <summary>
+        /// 設定上一頁按鈕狀態
+        /// </summary>
+        /// <param name="formData"></param>
+        /// <returns></returns>
+
+        public bool SetPreviousPageButtonStatus(FormData formData)
+        {
+            if (formData.nowPage == 1)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

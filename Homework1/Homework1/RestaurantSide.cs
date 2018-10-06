@@ -24,7 +24,6 @@ namespace Homework1
         /// <param name="e"></param>
         private void ClickCheckButton(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
     }
