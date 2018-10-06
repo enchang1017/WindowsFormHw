@@ -62,11 +62,11 @@
     <Compile Include="RestaurantSide.Designer.cs">
       <DependentUpon>RestaurantSide.cs</DependentUpon>
     </Compile>
-    <Compile Include="SetUpForm.cs">
+    <Compile Include="StartUpForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SetUpForm.Designer.cs">
-      <DependentUpon>SetUpForm.cs</DependentUpon>
+    <Compile Include="StartUpForm.Designer.cs">
+      <DependentUpon>StartUpForm.cs</DependentUpon>
     </Compile>
     <Compile Include="View\PresentationModel\CustomerPresentationModel.cs" />
     <Compile Include="Model\Order.cs" />
@@ -89,8 +89,8 @@
     <EmbeddedResource Include="RestaurantSide.resx">
       <DependentUpon>RestaurantSide.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SetUpForm.resx">
-      <DependentUpon>SetUpForm.cs</DependentUpon>
+    <EmbeddedResource Include="StartUpForm.resx">
+      <DependentUpon>StartUpForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
