@@ -179,5 +179,6 @@ namespace Homework1
                 _totalLabel.Text = _customerPresentationModel.SetTotalPriceLabel(_formData);
             }
         }
+
     }
 }
