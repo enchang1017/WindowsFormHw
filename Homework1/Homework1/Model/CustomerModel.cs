@@ -10,6 +10,7 @@ namespace Homework1.View.PresentationModel
     public class CustomerModel
     {
         private Order _order = new Order();
+        private FormData _formData = new FormData();
         /// <summary>
         /// 設定選取Meal
         /// </summary>
@@ -58,6 +59,31 @@ namespace Homework1.View.PresentationModel
         public string CombineButtonText(int mealButtonListIndex)
         {
             return this.ReadFile()[mealButtonListIndex]._mealName + Constant.WRAP + Constant.MONEY_SYMBOL + this.ReadFile()[mealButtonListIndex]._mealPrice + Constant.DOLLARS;
+        }
+
+        /// <summary>
+        /// 回傳FormData
+        /// </summary>
+        /// <returns></returns>
+        public FormData GetFormDataInstance()
+        {
+            return _formData;
+        }
+
+        /// <summary>
+        /// 設定頁數並記錄起來
+        /// </summary>
+        public void SetTotalPage()
+        {
+            _formData.totalPage = this.ReadFile().Count / Constant.MAX_MEAL_BUTTON_NUMBER + 1;
+        }
+
+        /// <summary>
+        /// 設定總價格
+        /// </summary>
+        public void SetTotalPrice()
+        {
+            _formData.SetTotalOrderListPrice(_order.orderMealList);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Homework1.View.PresentationModel
     public class CustomerPresentationModel
     {
         private CustomerModel _customerModel = new CustomerModel();
-
+        private MealButtonOption _mealButtonOption = new MealButtonOption();
         public CustomerPresentationModel(CustomerModel customerModel)
         {
             _customerModel = customerModel;
@@ -20,15 +20,15 @@ namespace Homework1.View.PresentationModel
         /// 觸發按鈕更新現在頁數
         /// </summary>
         /// <param name="formData"></param>
-        public void UpdateNowPage(Homework1.Model.FormData formData, string buttonName)
+        public void UpdateNowPage(string buttonName)
         {
             if (buttonName == Constant.NEXT_BUTTON)
             {
-                formData.nowPage += 1;
+                _customerModel.GetFormDataInstance().nowPage += 1;
             }
             else
             {
-                formData.nowPage -= 1;
+                _customerModel.GetFormDataInstance().nowPage -= 1;
             }
         }
 
@@ -51,9 +51,9 @@ namespace Homework1.View.PresentationModel
         /// </summary>
         /// <param name="formData"></param>
         /// <returns></returns>
-        public string SetPageLabelText(int nowPage, int totalPage)
+        public string GetPageLabelText()
         {
-            return Constant.PAGE_LABEL_TEXT_PAGE + nowPage + Constant.SLASH + totalPage;
+            return _customerModel.GetFormDataInstance().GetPageLabelText();
         }
 
         /// <summary>
@@ -61,9 +61,9 @@ namespace Homework1.View.PresentationModel
         /// </summary>
         /// <param name="formData"></param>
         /// <returns></returns>
-        public string SetTotalPriceLabel(Homework1.Model.FormData formData)
+        public string GetTotalPriceLabel()
         {
-            return Constant.TOTAL_PRICE + formData.totalPrice + Constant.DOLLARS;
+            return Constant.TOTAL_PRICE + _customerModel.GetFormDataInstance().totalPrice + Constant.DOLLARS;
         }
 
         /// <summary>
@@ -101,9 +101,9 @@ namespace Homework1.View.PresentationModel
         /// 設定總頁數
         /// </summary>
         /// <param name="formData"></param>
-        public void SetTotalPage(FormData formData)
+        public void SetTotalPage()
         {
-            formData.totalPage = _customerModel.ReadFile().Count / Constant.MAX_MEAL_BUTTON_NUMBER + 1;
+            _customerModel.SetTotalPage();
         }
 
         /// <summary>
@@ -120,14 +120,41 @@ namespace Homework1.View.PresentationModel
         /// </summary>
         /// <param name="formData"></param>
         /// <returns></returns>
-
-        public bool SetPreviousPageButtonStatus(FormData formData)
+        public bool SetPreviousPageButtonStatus()
         {
-            if (formData.nowPage == 1)
+            if (_customerModel.GetFormDataInstance().nowPage == 1)
             {
                 return false;
             }
             return true;
+        }
+
+        /// <summary>
+        /// 設定下一頁按鈕狀態
+        /// </summary>
+        /// <returns></returns>
+        public bool IsNextPageButtonEnable()
+        {
+            return _customerModel.GetFormDataInstance().SetNextPageButtonEnable();
+        }
+
+        /// <summary>
+        /// 取得按鈕選項狀態
+        /// </summary>
+        /// <param name="totalButtonNumber"></param>
+        /// <param name="mealButtonIndex"></param>
+        /// <returns></returns>
+        public bool GetButtonOption(int totalButtonNumber, int mealButtonIndex)
+        {
+            return _mealButtonOption.GetButtonOption(totalButtonNumber, mealButtonIndex, _customerModel.GetFormDataInstance());
+        }
+        
+        /// <summary>
+        /// 設定總價格
+        /// </summary>
+        public void SetTotalPrice()
+        {
+            _customerModel.SetTotalPrice();
         }
     }
 }

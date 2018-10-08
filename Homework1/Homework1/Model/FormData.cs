@@ -65,5 +65,14 @@ namespace Homework1.Model
             }
             return totalPrice;
         }
+
+        /// <summary>
+        /// 取得PageLabelText
+        /// </summary>
+        /// <returns></returns>
+        public string GetPageLabelText()
+        {
+            return Constant.PAGE_LABEL_TEXT_PAGE + this.nowPage + Constant.SLASH + this.totalPage;
+        }
     }
 }

@@ -12,7 +12,7 @@ namespace Homework1
 {
     public partial class StartUpForm : Form
     {
-        private Form _customerSide = new CustomerSide(new Model.FormData());
+        private Form _customerSide = new CustomerSide();
         private Form _restaurantSide = new RestaurantSide();
         public StartUpForm()
         {
@@ -29,7 +29,6 @@ namespace Homework1
             
             _customerSideButton.Enabled = false;
             _customerSide.Show();
-            //_customerSide.FormClosed += new FormClosedEventHandler(this.SetCustomerSideButtonStatus);
             _customerSide.FormClosing += OverrideCustomerFormClosing;
         }
 
@@ -43,7 +42,6 @@ namespace Homework1
 
             _restaurantSide.Show();
             _restaurantSideButton.Enabled = false;
-            //restaurantSide.FormClosed += new FormClosedEventHandler(this.SetRestaurantSideButtonStatus);
             _restaurantSide.FormClosing += OverrideRestaurantFormClosing;
         }
 

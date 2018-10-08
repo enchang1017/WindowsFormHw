@@ -14,17 +14,15 @@ namespace Homework1
 {
     public partial class CustomerSide : Form
     {
-        private FormData _formData = new FormData();
         private List<Button> _mealButtonList = new List<Button>();
         private CustomerPresentationModel _customerPresentationModel = new CustomerPresentationModel(new CustomerModel());
         private CustomerModel _customerModel = new CustomerModel();
-        public CustomerSide(FormData formData)
+        public CustomerSide()
         {
             InitializeComponent();
             _customerModel = _customerPresentationModel.GetCustomerModelInstance(); 
-            this._formData = formData;
             _customerPresentationModel.GetMealList();
-            _customerPresentationModel.SetTotalPage(_formData);
+            _customerPresentationModel.SetTotalPage();
             #region Meal Button init
             #region Create Button List
             for (int i = 0; i < _customerPresentationModel.GetMealList().Count; i++)
@@ -46,8 +44,8 @@ namespace Homework1
             SetPageButtonEnable();
             SetPageButtonEnable();
             #endregion
-            _pageLabel.Text = _customerPresentationModel.SetPageLabelText(_formData.nowPage, _formData.totalPage);
-            _totalLabel.Text = _customerPresentationModel.SetTotalPriceLabel(_formData);
+            _pageLabel.Text = _customerPresentationModel.GetPageLabelText();
+            _totalLabel.Text = _customerPresentationModel.GetTotalPriceLabel();
             this._orderDataGridView.AllowUserToAddRows = false;
             _addButton.Enabled = false;
         }
@@ -56,8 +54,8 @@ namespace Homework1
         /// </summary>
         public void SetPageButtonEnable()
         {
-            _nextPageButton.Enabled = _formData.SetNextPageButtonEnable();
-            _previousPageButton.Enabled = _customerPresentationModel.SetPreviousPageButtonStatus(_formData);
+            _nextPageButton.Enabled = _customerPresentationModel.IsNextPageButtonEnable();
+            _previousPageButton.Enabled = _customerPresentationModel.SetPreviousPageButtonStatus();
         }
 
         /// <summary>
@@ -88,10 +86,10 @@ namespace Homework1
         /// </summary>
         public void SetMealButtonOption()
         {
-            MealButtonOption mealButtonOption = new MealButtonOption();
+            
             for (int i = 0; i < _mealButtonList.Count; i++)
             {
-                if (mealButtonOption.GetButtonOption(_mealButtonList.Count, i, _formData))
+                if (_customerPresentationModel.GetButtonOption(_mealButtonList.Count, i))
                 {
                     _mealButtonList[i].Visible = true;
                     _mealButtonList[i].Enabled = true;
@@ -111,10 +109,10 @@ namespace Homework1
         /// <param name="e"></param>
         private void ClickPreviousPageButton(object sender, EventArgs e)
         {
-            _customerPresentationModel.UpdateNowPage(_formData, _previousPageButton.Name);
+            _customerPresentationModel.UpdateNowPage(_previousPageButton.Name);
             SetMealButtonOption();
             SetPageButtonEnable();
-            _pageLabel.Text = _customerPresentationModel.SetPageLabelText(_formData.nowPage, _formData.totalPage);
+            _pageLabel.Text = _customerPresentationModel.GetPageLabelText();
             _addButton.Enabled = false;
             _customerModel.SetSelectedMeal(new Meal(Constant.INITIAL, 0));
             _mealDescriptionBox.Text = _customerModel.GetSelectedMeal()._mealDescription;
@@ -127,10 +125,10 @@ namespace Homework1
         /// <param name="e"></param>
         private void ClickNextPageButton(object sender, EventArgs e)
         {
-            _customerPresentationModel.UpdateNowPage(_formData, _nextPageButton.Name);
+            _customerPresentationModel.UpdateNowPage(_nextPageButton.Name);
             SetMealButtonOption();
             SetPageButtonEnable();
-            _pageLabel.Text = _customerPresentationModel.SetPageLabelText(_formData.nowPage, _formData.totalPage);
+            _pageLabel.Text = _customerPresentationModel.GetPageLabelText();
             _customerModel.SetSelectedMeal(new Meal(Constant.INITIAL, 0));
             _addButton.Enabled = false;
             _mealDescriptionBox.Text = _customerModel.GetSelectedMeal()._mealDescription;
@@ -158,8 +156,8 @@ namespace Homework1
         {
             _orderDataGridView.Rows.Add(Constant.DELETE, _customerModel.GetSelectedMeal()._mealName, _customerModel.GetSelectedMeal()._mealPrice);
             _customerModel.GetOrderList().Add(_customerModel.GetSelectedMeal());
-            _formData.SetTotalOrderListPrice(_customerModel.GetOrderList());
-            _totalLabel.Text = _customerPresentationModel.SetTotalPriceLabel(_formData);
+            _customerPresentationModel.SetTotalPrice();
+            _totalLabel.Text = _customerPresentationModel.GetTotalPriceLabel();
         }
 
         /// <summary>
@@ -175,8 +173,8 @@ namespace Homework1
             {
                 _orderDataGridView.Rows.Remove(_orderDataGridView.Rows[e.RowIndex]);
                 _customerModel.GetOrderList().RemoveAt(e.RowIndex);
-                _formData.SetTotalOrderListPrice(_customerModel.GetOrderList());
-                _totalLabel.Text = _customerPresentationModel.SetTotalPriceLabel(_formData);
+                _customerPresentationModel.SetTotalPrice();
+                _totalLabel.Text = _customerPresentationModel.GetTotalPriceLabel();
             }
         }
 
