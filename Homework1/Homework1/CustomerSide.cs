@@ -33,7 +33,7 @@ namespace Homework1
                 _mealButtonList[i].Size = new Size(Constant.BUTTON_SIZE, Constant.BUTTON_SIZE);
                 _mealButtonList[i].Name = i.ToString();
                 _mealButtonList[i].Click += new EventHandler(this.MealButtonClick);
-                _mealButtonList[i].Image = System.Drawing.Image.FromFile(@"..\..\..\img\MealButtonImg\" + i + Constant.GET_PICTURE);
+                _mealButtonList[i].Image = Image.FromFile(@"..\..\..\img\MealButtonImg\" + i + Constant.GET_PICTURE);
                 _mealButtonList[i].TextAlign = ContentAlignment.BottomLeft;
                 _mealButtonList[i].ForeColor = Color.White;
             }
@@ -63,21 +63,9 @@ namespace Homework1
         /// </summary>
         public void SetMealButtonLocation(List<Homework1.Model.Meal> mealList)
         {
-            MealButtonOption mealButtonOption = new MealButtonOption();
             for (int i = 0; i < mealList.Count; i++)
             {
-                if (i % Constant.MAX_ROW_NUMBER == 0)
-                {
-                    _mealButtonList[i].Location = new System.Drawing.Point(Constant.INITIAL_X, Constant.INITIAL_Y + mealButtonOption.GetVariable(i));
-                }
-                else if (i % Constant.MAX_ROW_NUMBER == 1)
-                {
-                    _mealButtonList[i].Location = new System.Drawing.Point(Constant.INITIAL_X + Constant.SPACING, Constant.INITIAL_Y + mealButtonOption.GetVariable(i));
-                }
-                else
-                {
-                    _mealButtonList[i].Location = new System.Drawing.Point(Constant.INITIAL_X + Constant.SPACING + Constant.SPACING, Constant.INITIAL_Y + mealButtonOption.GetVariable(i));
-                }
+                _mealButtonList[i].Location = _customerPresentationModel.SetMealButtonLocation(i);
             }
         }
 

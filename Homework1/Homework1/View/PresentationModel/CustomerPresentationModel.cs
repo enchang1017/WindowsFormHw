@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -155,6 +156,24 @@ namespace Homework1.View.PresentationModel
         public void SetTotalPrice()
         {
             _customerModel.SetTotalPrice();
+        }
+
+        //設定MealButton Location
+        public Point SetMealButtonLocation(int buttonIndex)
+        {
+            MealButtonOption mealButtonOption = new MealButtonOption();
+            if (buttonIndex % Constant.MAX_ROW_NUMBER == 0)
+            {
+                return new Point(Constant.INITIAL_X, Constant.INITIAL_Y + mealButtonOption.GetVariable(buttonIndex));
+            }
+            else if (buttonIndex % Constant.MAX_ROW_NUMBER == 1)
+            {
+                return new Point(Constant.INITIAL_X + Constant.SPACING, Constant.INITIAL_Y + mealButtonOption.GetVariable(buttonIndex));
+            }
+            else
+            {
+                return new Point(Constant.INITIAL_X + Constant.SPACING + Constant.SPACING, Constant.INITIAL_Y + mealButtonOption.GetVariable(buttonIndex));
+            }
         }
     }
 }
