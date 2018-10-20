@@ -11,6 +11,8 @@ namespace Homework1.View.PresentationModel
     {
         private Order _order = new Order();
         private FormData _formData = new FormData();
+        private List<Meal> _mealList = new List<Meal>();
+
         /// <summary>
         /// 設定選取Meal
         /// </summary>
@@ -48,7 +50,8 @@ namespace Homework1.View.PresentationModel
         public List<Meal> ReadFile()
         {
             MealListFactory mealListFactory = new MealListFactory();
-            return mealListFactory.ReadData();
+            _mealList = mealListFactory.ReadData();
+            return _mealList;
         }
 
         /// <summary>
@@ -58,7 +61,7 @@ namespace Homework1.View.PresentationModel
         /// <returns></returns>
         public string CombineButtonText(int mealButtonListIndex)
         {
-            return this.ReadFile()[mealButtonListIndex]._mealName + Constant.WRAP + Constant.MONEY_SYMBOL + this.ReadFile()[mealButtonListIndex]._mealPrice + Constant.DOLLARS;
+            return _mealList[mealButtonListIndex]._mealName + Constant.WRAP + Constant.MONEY_SYMBOL + _mealList[mealButtonListIndex]._mealPrice + Constant.DOLLARS;
         }
 
         /// <summary>

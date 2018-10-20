@@ -9,7 +9,7 @@ using Homework1.Model;
 
 namespace Homework1.View.PresentationModel
 {
-    public class CustomerPresentationModel
+    public partial class CustomerPresentationModel
     {
         private CustomerModel _customerModel = new CustomerModel();
         private MealButtonOption _mealButtonOption = new MealButtonOption();
