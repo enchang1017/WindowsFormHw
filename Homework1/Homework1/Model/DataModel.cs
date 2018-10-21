@@ -7,7 +7,7 @@ using Homework1.Model;
 
 namespace Homework1.View.PresentationModel
 {
-    public class CustomerModel
+    public class DataModel
     {
         private Order _order = new Order();
         private FormData _formData = new FormData();
@@ -95,7 +95,7 @@ namespace Homework1.View.PresentationModel
         /// </summary>
         public void SetMealImage()
         {
-            for (int i = 0; i<_mealList.Count; i++)
+            for (int i = 0; i < _mealList.Count; i++)
             {
                 _mealList[i].ImagePath = @"..\..\..\img\MealButtonImg\" + i + Constant.GET_PICTURE;
             }

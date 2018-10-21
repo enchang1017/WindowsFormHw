@@ -26,5 +26,13 @@ namespace Homework1.Model
         public const string MONEY_SYMBOL = "$";
         public const string DELETE = "X";
         public const string GET_PICTURE = ".png";
+
+        #region 物件屬性
+        public const string ITEM_TEXT = "Text";
+        #endregion
+
+        #region DataBinding attr
+        public const string NOTIFY_TOTAL_PRICE = "TotalPrice";
+        #endregion
     }
 }

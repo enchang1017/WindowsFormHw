@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Homework1.View.PresentationModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,11 +13,14 @@ namespace Homework1
 {
     public partial class StartUpForm : Form
     {
-        private Form _customerSide = new CustomerSide();
-        private Form _restaurantSide = new RestaurantSide();
+        private Form _customerSide;
+        private Form _restaurantSide;
+        private DataModel _dataModel = new DataModel();
         public StartUpForm()
         {
             InitializeComponent();
+            _customerSide = new CustomerSide(_dataModel);
+            _restaurantSide = new RestaurantSide(_dataModel);
         }
 
         /// <summary>

@@ -15,12 +15,15 @@ namespace Homework1
     public partial class CustomerSide : Form
     {
         private List<Button> _mealButtonList = new List<Button>();
-        private CustomerPresentationModel _customerPresentationModel = new CustomerPresentationModel(new CustomerModel());
-        private CustomerModel _customerModel = new CustomerModel();
-        public CustomerSide()
+        private CustomerPresentationModel _customerPresentationModel;
+        private DataModel _dataModel = new DataModel();
+        public CustomerSide(DataModel dataModel)
         {
+            
             InitializeComponent();
-            _customerModel = _customerPresentationModel.GetCustomerModelInstance(); 
+            _dataModel = dataModel;
+            _customerPresentationModel = new CustomerPresentationModel(_dataModel);
+            _dataModel = _customerPresentationModel.GetDataModelInstance(); 
             _customerPresentationModel.GetMealList();
             _customerPresentationModel.SetTotalPage();
             #region Meal Button init
@@ -33,7 +36,7 @@ namespace Homework1
                 _mealButtonList[i].Size = new Size(Constant.BUTTON_SIZE, Constant.BUTTON_SIZE);
                 _mealButtonList[i].Name = i.ToString();
                 _mealButtonList[i].Click += new EventHandler(this.MealButtonClick);
-                _mealButtonList[i].Image = Image.FromFile(_customerModel.ReadFile()[i].ImagePath);
+                _mealButtonList[i].Image = Image.FromFile(_dataModel.ReadFile()[i].ImagePath);
                 _mealButtonList[i].TextAlign = ContentAlignment.BottomLeft;
                 _mealButtonList[i].ForeColor = Color.White;
             }
@@ -45,9 +48,9 @@ namespace Homework1
             SetPageButtonEnable();
             #endregion
             _pageLabel.Text = _customerPresentationModel.GetPageLabelText();
-            _totalLabel.Text = _customerPresentationModel.GetTotalPriceLabel();
             this._orderDataGridView.AllowUserToAddRows = false;
             _addButton.Enabled = false;
+            _totalLabel.DataBindings.Add(Constant.ITEM_TEXT, _customerPresentationModel, Constant.NOTIFY_TOTAL_PRICE);
         }
         /// <summary>
         /// 設定頁面按鈕狀態
@@ -74,7 +77,6 @@ namespace Homework1
         /// </summary>
         public void SetMealButtonOption()
         {
-            
             for (int i = 0; i < _mealButtonList.Count; i++)
             {
                 if (_customerPresentationModel.GetButtonOption(_mealButtonList.Count, i))
@@ -102,8 +104,8 @@ namespace Homework1
             SetPageButtonEnable();
             _pageLabel.Text = _customerPresentationModel.GetPageLabelText();
             _addButton.Enabled = false;
-            _customerModel.SetSelectedMeal(new Meal(Constant.INITIAL, 0));
-            _mealDescriptionBox.Text = _customerModel.GetSelectedMeal().MealDescription;
+            _dataModel.SetSelectedMeal(new Meal(Constant.INITIAL, 0));
+            _mealDescriptionBox.Text = _dataModel.GetSelectedMeal().MealDescription;
         }
 
         /// <summary>
@@ -117,9 +119,9 @@ namespace Homework1
             SetMealButtonOption();
             SetPageButtonEnable();
             _pageLabel.Text = _customerPresentationModel.GetPageLabelText();
-            _customerModel.SetSelectedMeal(new Meal(Constant.INITIAL, 0));
+            _dataModel.SetSelectedMeal(new Meal(Constant.INITIAL, 0));
             _addButton.Enabled = false;
-            _mealDescriptionBox.Text = _customerModel.GetSelectedMeal().MealDescription;
+            _mealDescriptionBox.Text = _dataModel.GetSelectedMeal().MealDescription;
         }
 
         /// <summary>
@@ -130,8 +132,8 @@ namespace Homework1
         private void MealButtonClick(object sender, EventArgs e)
         {
             Button button = sender as Button;
-            _customerModel.SetSelectedMeal(_customerPresentationModel.GetMealList()[Int32.Parse(button.Name)]);
-            _mealDescriptionBox.Text = _customerModel.GetSelectedMeal().MealDescription;
+            _dataModel.SetSelectedMeal(_customerPresentationModel.GetMealList()[Int32.Parse(button.Name)]);
+            _mealDescriptionBox.Text = _dataModel.GetSelectedMeal().MealDescription;
             _addButton.Enabled = true;
         }
 
@@ -142,10 +144,9 @@ namespace Homework1
         /// <param name="e"></param>
         private void AddButtonClick(object sender, EventArgs e)
         {
-            _orderDataGridView.Rows.Add(Constant.DELETE, _customerModel.GetSelectedMeal().MealName, _customerModel.GetSelectedMeal().MealPrice);
-            _customerModel.GetOrderList().Add(_customerModel.GetSelectedMeal());
+            _orderDataGridView.Rows.Add(Constant.DELETE, _dataModel.GetSelectedMeal().MealName, _dataModel.GetSelectedMeal().MealPrice);
+            _dataModel.GetOrderList().Add(_dataModel.GetSelectedMeal());
             _customerPresentationModel.SetTotalPrice();
-            _totalLabel.Text = _customerPresentationModel.GetTotalPriceLabel();
         }
 
         /// <summary>
@@ -160,9 +161,8 @@ namespace Homework1
             if (senderGrid.Columns[e.ColumnIndex] == _deleteButton)
             {
                 _orderDataGridView.Rows.Remove(_orderDataGridView.Rows[e.RowIndex]);
-                _customerModel.GetOrderList().RemoveAt(e.RowIndex);
+                _dataModel.GetOrderList().RemoveAt(e.RowIndex);
                 _customerPresentationModel.SetTotalPrice();
-                _totalLabel.Text = _customerPresentationModel.GetTotalPriceLabel();
             }
         }
 
