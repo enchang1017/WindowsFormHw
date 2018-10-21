@@ -40,7 +40,7 @@ namespace Homework1.Model
             while (!streamReader.EndOfStream)
             {
                 string Access = streamReader.ReadLine();
-                mealList[count]._mealDescription = Access;
+                mealList[count].MealDescription = Access;
                 count++;
             }
             streamReader.Close();

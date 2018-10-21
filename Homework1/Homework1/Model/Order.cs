@@ -12,16 +12,16 @@ namespace Homework1.Model
     {
         public Order()
         {
-            this.orderMealList = new List<Meal>();
+            this.OrderMealList = new List<Meal>();
         }
 
-        public Meal selectedMeal
+        public Meal SelectedMeal
         {
             get;
             set;
         }
 
-        public List<Meal> orderMealList
+        public List<Meal> OrderMealList
         {
             get;
             set;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -9,10 +10,13 @@ using Homework1.Model;
 
 namespace Homework1.View.PresentationModel
 {
-    public partial class CustomerPresentationModel
+    public partial class CustomerPresentationModel : INotifyPropertyChanged
     {
         private CustomerModel _customerModel = new CustomerModel();
         private MealButtonOption _mealButtonOption = new MealButtonOption();
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public CustomerPresentationModel(CustomerModel customerModel)
         {
             _customerModel = customerModel;
@@ -75,7 +79,7 @@ namespace Homework1.View.PresentationModel
         /// <returns></returns>
         public int SetTotalPrice(Homework1.Model.FormData formData, Homework1.Model.Meal meal)
         {
-            return formData.totalPrice += meal._mealPrice;
+            return formData.totalPrice += meal.MealPrice;
         }
 
         /// <summary>

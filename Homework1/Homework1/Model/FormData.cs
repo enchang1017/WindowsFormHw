@@ -61,7 +61,7 @@ namespace Homework1.Model
             totalPrice = 0;
             foreach (Meal meal in orderMeal)
             {
-                totalPrice += meal._mealPrice;
+                totalPrice += meal.MealPrice;
             }
             return totalPrice;
         }

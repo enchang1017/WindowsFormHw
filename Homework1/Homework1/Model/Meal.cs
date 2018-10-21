@@ -10,13 +10,13 @@ namespace Homework1.Model
     {
         public Meal(string mealName , int mealPrice)
         {
-            this._mealName = mealName;
-            this._mealPrice = mealPrice;
+            this.MealName = mealName;
+            this.MealPrice = mealPrice;
         }
         /// <summary>
         /// 菜名
         /// </summary>
-        public string _mealName
+        public string MealName
         {
             get;
             set;
@@ -25,7 +25,7 @@ namespace Homework1.Model
         /// <summary>
         /// 價格
         /// </summary>
-        public int _mealPrice
+        public int MealPrice
         {
             get;
             set;
@@ -34,7 +34,13 @@ namespace Homework1.Model
         /// <summary>
         /// 菜單簡介
         /// </summary>
-        public string _mealDescription
+        public string MealDescription
+        {
+            get;
+            set;
+        }
+
+        public string ImagePath
         {
             get;
             set;

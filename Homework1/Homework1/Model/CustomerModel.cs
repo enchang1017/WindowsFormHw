@@ -20,8 +20,8 @@ namespace Homework1.View.PresentationModel
         /// <returns></returns>
         public Meal SetSelectedMeal(Meal meal)
         {
-            _order.selectedMeal = meal;
-            return _order.selectedMeal;
+            _order.SelectedMeal = meal;
+            return _order.SelectedMeal;
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Homework1.View.PresentationModel
         /// <returns></returns>
         public Meal GetSelectedMeal()
         {
-            return _order.selectedMeal;
+            return _order.SelectedMeal;
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Homework1.View.PresentationModel
         /// <returns></returns>
         public List<Meal> GetOrderList()
         {
-            return _order.orderMealList;
+            return _order.OrderMealList;
         }
 
         /// <summary>
@@ -51,6 +51,7 @@ namespace Homework1.View.PresentationModel
         {
             MealListFactory mealListFactory = new MealListFactory();
             _mealList = mealListFactory.ReadData();
+            SetMealImage();
             return _mealList;
         }
 
@@ -61,7 +62,7 @@ namespace Homework1.View.PresentationModel
         /// <returns></returns>
         public string CombineButtonText(int mealButtonListIndex)
         {
-            return _mealList[mealButtonListIndex]._mealName + Constant.WRAP + Constant.MONEY_SYMBOL + _mealList[mealButtonListIndex]._mealPrice + Constant.DOLLARS;
+            return _mealList[mealButtonListIndex].MealName + Constant.WRAP + Constant.MONEY_SYMBOL + _mealList[mealButtonListIndex].MealPrice + Constant.DOLLARS;
         }
 
         /// <summary>
@@ -86,7 +87,18 @@ namespace Homework1.View.PresentationModel
         /// </summary>
         public void SetTotalPrice()
         {
-            _formData.SetTotalOrderListPrice(_order.orderMealList);
+            _formData.SetTotalOrderListPrice(_order.OrderMealList);
+        }
+
+        /// <summary>
+        /// 設定圖片路徑
+        /// </summary>
+        public void SetMealImage()
+        {
+            for (int i = 0; i<_mealList.Count; i++)
+            {
+                _mealList[i].ImagePath = @"..\..\..\img\MealButtonImg\" + i + Constant.GET_PICTURE;
+            }
         }
     }
 }

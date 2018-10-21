@@ -33,7 +33,7 @@ namespace Homework1
                 _mealButtonList[i].Size = new Size(Constant.BUTTON_SIZE, Constant.BUTTON_SIZE);
                 _mealButtonList[i].Name = i.ToString();
                 _mealButtonList[i].Click += new EventHandler(this.MealButtonClick);
-                _mealButtonList[i].Image = Image.FromFile(@"..\..\..\img\MealButtonImg\" + i + Constant.GET_PICTURE);
+                _mealButtonList[i].Image = Image.FromFile(_customerModel.ReadFile()[i].ImagePath);
                 _mealButtonList[i].TextAlign = ContentAlignment.BottomLeft;
                 _mealButtonList[i].ForeColor = Color.White;
             }
@@ -103,7 +103,7 @@ namespace Homework1
             _pageLabel.Text = _customerPresentationModel.GetPageLabelText();
             _addButton.Enabled = false;
             _customerModel.SetSelectedMeal(new Meal(Constant.INITIAL, 0));
-            _mealDescriptionBox.Text = _customerModel.GetSelectedMeal()._mealDescription;
+            _mealDescriptionBox.Text = _customerModel.GetSelectedMeal().MealDescription;
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Homework1
             _pageLabel.Text = _customerPresentationModel.GetPageLabelText();
             _customerModel.SetSelectedMeal(new Meal(Constant.INITIAL, 0));
             _addButton.Enabled = false;
-            _mealDescriptionBox.Text = _customerModel.GetSelectedMeal()._mealDescription;
+            _mealDescriptionBox.Text = _customerModel.GetSelectedMeal().MealDescription;
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace Homework1
         {
             Button button = sender as Button;
             _customerModel.SetSelectedMeal(_customerPresentationModel.GetMealList()[Int32.Parse(button.Name)]);
-            _mealDescriptionBox.Text = _customerModel.GetSelectedMeal()._mealDescription;
+            _mealDescriptionBox.Text = _customerModel.GetSelectedMeal().MealDescription;
             _addButton.Enabled = true;
         }
 
@@ -142,7 +142,7 @@ namespace Homework1
         /// <param name="e"></param>
         private void AddButtonClick(object sender, EventArgs e)
         {
-            _orderDataGridView.Rows.Add(Constant.DELETE, _customerModel.GetSelectedMeal()._mealName, _customerModel.GetSelectedMeal()._mealPrice);
+            _orderDataGridView.Rows.Add(Constant.DELETE, _customerModel.GetSelectedMeal().MealName, _customerModel.GetSelectedMeal().MealPrice);
             _customerModel.GetOrderList().Add(_customerModel.GetSelectedMeal());
             _customerPresentationModel.SetTotalPrice();
             _totalLabel.Text = _customerPresentationModel.GetTotalPriceLabel();
