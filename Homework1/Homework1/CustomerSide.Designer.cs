@@ -45,15 +45,16 @@
             // 
             // _orderDataGridView
             // 
+            this._orderDataGridView.AllowUserToAddRows = false;
             this._orderDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this._orderDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this._deleteButton,
             this._orderNameColumns,
             this._orderPriceColumns});
-            this._orderDataGridView.Location = new System.Drawing.Point(565, 24);
+            this._orderDataGridView.Location = new System.Drawing.Point(565, 26);
             this._orderDataGridView.Name = "_orderDataGridView";
             this._orderDataGridView.RowHeadersVisible = false;
-            this._orderDataGridView.Size = new System.Drawing.Size(540, 675);
+            this._orderDataGridView.Size = new System.Drawing.Size(540, 731);
             this._orderDataGridView.TabIndex = 0;
             this._orderDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ClickDataGridViewCellContent);
             // 
@@ -83,7 +84,7 @@
             this._totalLabel.BackColor = System.Drawing.SystemColors.Control;
             this._totalLabel.Font = new System.Drawing.Font("新細明體", 20F, System.Drawing.FontStyle.Bold);
             this._totalLabel.ForeColor = System.Drawing.Color.DarkRed;
-            this._totalLabel.Location = new System.Drawing.Point(949, 715);
+            this._totalLabel.Location = new System.Drawing.Point(949, 775);
             this._totalLabel.Name = "_totalLabel";
             this._totalLabel.Size = new System.Drawing.Size(89, 27);
             this._totalLabel.TabIndex = 1;
@@ -97,28 +98,28 @@
             this._mealGroupBox.Controls.Add(this._previousPageButton);
             this._mealGroupBox.Controls.Add(this._nextPageButton);
             this._mealGroupBox.Controls.Add(this._pageLabel);
-            this._mealGroupBox.Location = new System.Drawing.Point(12, 24);
+            this._mealGroupBox.Location = new System.Drawing.Point(12, 26);
             this._mealGroupBox.Name = "_mealGroupBox";
-            this._mealGroupBox.Size = new System.Drawing.Size(515, 675);
+            this._mealGroupBox.Size = new System.Drawing.Size(515, 731);
             this._mealGroupBox.TabIndex = 2;
             this._mealGroupBox.TabStop = false;
             this._mealGroupBox.Text = "Meals";
             // 
             // _mealDescriptionBox
             // 
-            this._mealDescriptionBox.Location = new System.Drawing.Point(6, 534);
+            this._mealDescriptionBox.Location = new System.Drawing.Point(6, 579);
             this._mealDescriptionBox.Name = "_mealDescriptionBox";
             this._mealDescriptionBox.ReadOnly = true;
-            this._mealDescriptionBox.Size = new System.Drawing.Size(502, 74);
+            this._mealDescriptionBox.Size = new System.Drawing.Size(502, 80);
             this._mealDescriptionBox.TabIndex = 4;
             this._mealDescriptionBox.Text = "";
             // 
             // _addButton
             // 
             this._addButton.ForeColor = System.Drawing.SystemColors.ControlText;
-            this._addButton.Location = new System.Drawing.Point(389, 617);
+            this._addButton.Location = new System.Drawing.Point(389, 668);
             this._addButton.Name = "_addButton";
-            this._addButton.Size = new System.Drawing.Size(120, 21);
+            this._addButton.Size = new System.Drawing.Size(120, 23);
             this._addButton.TabIndex = 3;
             this._addButton.Text = "Add";
             this._addButton.UseVisualStyleBackColor = true;
@@ -126,9 +127,9 @@
             // 
             // _previousPageButton
             // 
-            this._previousPageButton.Location = new System.Drawing.Point(236, 642);
+            this._previousPageButton.Location = new System.Drawing.Point(236, 696);
             this._previousPageButton.Name = "_previousPageButton";
-            this._previousPageButton.Size = new System.Drawing.Size(120, 21);
+            this._previousPageButton.Size = new System.Drawing.Size(120, 23);
             this._previousPageButton.TabIndex = 2;
             this._previousPageButton.Text = "Previous Page";
             this._previousPageButton.UseVisualStyleBackColor = true;
@@ -136,9 +137,9 @@
             // 
             // _nextPageButton
             // 
-            this._nextPageButton.Location = new System.Drawing.Point(389, 643);
+            this._nextPageButton.Location = new System.Drawing.Point(389, 697);
             this._nextPageButton.Name = "_nextPageButton";
-            this._nextPageButton.Size = new System.Drawing.Size(120, 21);
+            this._nextPageButton.Size = new System.Drawing.Size(120, 23);
             this._nextPageButton.TabIndex = 1;
             this._nextPageButton.Text = "Next Page";
             this._nextPageButton.UseVisualStyleBackColor = true;
@@ -149,7 +150,7 @@
             this._pageLabel.AutoSize = true;
             this._pageLabel.Font = new System.Drawing.Font("新細明體", 16F);
             this._pageLabel.ForeColor = System.Drawing.SystemColors.MenuHighlight;
-            this._pageLabel.Location = new System.Drawing.Point(6, 643);
+            this._pageLabel.Location = new System.Drawing.Point(6, 697);
             this._pageLabel.Name = "_pageLabel";
             this._pageLabel.Size = new System.Drawing.Size(60, 22);
             this._pageLabel.TabIndex = 0;
@@ -157,9 +158,9 @@
             // 
             // CustomerSide
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1133, 749);
+            this.ClientSize = new System.Drawing.Size(1133, 811);
             this.Controls.Add(this._mealGroupBox);
             this.Controls.Add(this._totalLabel);
             this.Controls.Add(this._orderDataGridView);

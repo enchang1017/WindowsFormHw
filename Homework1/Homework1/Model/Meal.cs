@@ -40,7 +40,25 @@ namespace Homework1.Model
             set;
         }
 
+        /// <summary>
+        /// 圖片路徑
+        /// </summary>
         public string ImagePath
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// 餐點類別
+        /// </summary>
+        public Category Category
+        {
+            get;
+            set;
+        }
+
+        public int Quantity
         {
             get;
             set;

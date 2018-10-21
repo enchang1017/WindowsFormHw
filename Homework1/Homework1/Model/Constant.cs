@@ -33,6 +33,7 @@ namespace Homework1.Model
 
         #region DataBinding attr
         public const string NOTIFY_TOTAL_PRICE = "TotalPrice";
+        public const string NOTIFY_DESCRIPTION = "DescriptionText";
         #endregion
     }
 }
