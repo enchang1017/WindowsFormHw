@@ -12,6 +12,7 @@ namespace Homework1.View.PresentationModel
         private Order _order = new Order();
         private FormData _formData = new FormData();
         private List<Meal> _mealList = new List<Meal>();
+        private List<Category> _categories = new List<Category>();
 
         /// <summary>
         /// 設定選取Meal
