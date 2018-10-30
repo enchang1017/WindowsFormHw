@@ -8,10 +8,10 @@ namespace Homework1.Model
 {
     public class Meal
     {
-        public Meal(string mealName , int mealPrice)
+        private int _subtotal;
+        public Meal()
         {
-            this.MealName = mealName;
-            this.MealPrice = mealPrice;
+            this.Quantity = 1;
         }
         /// <summary>
         /// 菜名
@@ -63,5 +63,15 @@ namespace Homework1.Model
             get;
             set;
         }
+
+        public int Subtotal
+        {
+            get
+            {
+                _subtotal = this.Quantity * this.MealPrice;
+                return _subtotal;
+            }
+        }
+
     }
 }

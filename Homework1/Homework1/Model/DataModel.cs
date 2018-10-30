@@ -1,28 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Homework1.Model;
 
-namespace Homework1.View.PresentationModel
+namespace Homework1.Model
 {
     public class DataModel
     {
+        public event ModelChangedEventHandler ModelChanged;
+        public delegate void ModelChangedEventHandler();
         private Order _order = new Order();
         private FormData _formData = new FormData();
-        private List<Meal> _mealList = new List<Meal>();
-        private List<Category> _categories = new List<Category>();
+        private BindingList<Meal> _mealList = new BindingList<Meal>();
+        private BindingList<Category> _categories = new BindingList<Category>();
 
+        MealListFactory _mealListFactory = new MealListFactory();
+
+        public DataModel()
+        {
+            _mealListFactory.ReadCategory(_categories);
+            ReadFile();
+        }
         /// <summary>
         /// 設定選取Meal
         /// </summary>
         /// <param name="meal"></param>
         /// <returns></returns>
-        public Meal SetSelectedMeal(Meal meal)
+        public void SetSelectedMeal(int ButtonIndex)
         {
-            _order.SelectedMeal = meal;
-            return _order.SelectedMeal;
+            if (ButtonIndex == Constant.SELECTED_MEAL_INITIAL)
+            {
+                _order.SelectedMeal = new Meal();
+            }
+            else
+            {
+                _order.SelectedMeal = _mealList[ButtonIndex];
+            }
         }
 
         /// <summary>
@@ -48,12 +64,10 @@ namespace Homework1.View.PresentationModel
         /// </summary>
         /// <param name="formData"></param>
         /// <returns></returns>
-        public List<Meal> ReadFile()
+        public void ReadFile()
         {
-            MealListFactory mealListFactory = new MealListFactory();
-            _mealList = mealListFactory.ReadData();
+            _mealListFactory.ReadData(_mealList, _categories);
             SetMealImage();
-            return _mealList;
         }
 
         /// <summary>
@@ -78,9 +92,9 @@ namespace Homework1.View.PresentationModel
         /// <summary>
         /// 設定頁數並記錄起來
         /// </summary>
-        public void SetTotalPage()
+        public void SetTotalPage(int buttonListNumber)
         {
-            _formData.totalPage = this.ReadFile().Count / Constant.MAX_MEAL_BUTTON_NUMBER + 1;
+            _formData.TotalPage = buttonListNumber / Constant.MAX_MEAL_BUTTON_NUMBER + 1;
         }
 
         /// <summary>
@@ -98,8 +112,63 @@ namespace Homework1.View.PresentationModel
         {
             for (int i = 0; i < _mealList.Count; i++)
             {
-                _mealList[i].ImagePath = @"..\..\..\img\MealButtonImg\" + i + Constant.GET_PICTURE;
+                this._mealList[i].ImagePath = @"..\..\..\img\MealButtonImg\" + i + Constant.GET_PICTURE;
             }
+        }
+
+        /// <summary>
+        /// 取得頁數正確
+        /// </summary>
+        public bool GetCurrentPage(string tabPageText, int number)
+        {
+            if (this._mealList[number].Category.CategoryName == tabPageText)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 檢查是否選擇的菜單已在訂單內
+        /// </summary>
+        public bool CheckMealInOrderList()
+        {
+            foreach (Meal meal in _order.OrderMealList)
+            {
+                if (meal == _order.SelectedMeal)
+                    return false;
+            }
+            return true;
+        }
+
+        public BindingList<Meal> MealsList
+        {
+            get
+            {
+                return _mealList;
+            }
+        }
+
+        public BindingList<Category> CategoriesList
+        {
+            get
+            {
+                return _categories;
+            }
+        }
+
+        public Order GetOrder
+        {
+            get
+            {
+                return _order;
+            }
+        }
+        //Oberserve
+        private void NotifyObserver()
+        {
+            if (ModelChanged != null)
+                ModelChanged();
         }
     }
 }

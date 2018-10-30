@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Homework1.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,6 @@ namespace Homework1.View.PresentationModel
 {
     public class MealButtonOption
     {
-        const int SPACING = 179;
-        const int MAX_ROW_NUMBER = 3;
-        const int MAX_BUTTON_NUMBER = 9;
         /// <summary>
         /// 取得Y的變量
         /// </summary>
@@ -18,17 +16,17 @@ namespace Homework1.View.PresentationModel
         /// <returns></returns>
         public int GetVariable(int index)
         {
-            if ((index / MAX_ROW_NUMBER) % MAX_ROW_NUMBER == 0)
+            if ((index / Constant.MAX_ROW_NUMBER) % Constant.MAX_ROW_NUMBER == 0)
             {
                 return 0;
             }
-            else if ((index / MAX_ROW_NUMBER) % MAX_ROW_NUMBER == 1)
+            else if ((index / Constant.MAX_ROW_NUMBER) % Constant.MAX_ROW_NUMBER == 1)
             {
-                return SPACING;
+                return Constant.SPACING;
             }
             else
             {
-                return SPACING + SPACING;
+                return Constant.SPACING + Constant.SPACING;
             }
         }
 
@@ -39,9 +37,9 @@ namespace Homework1.View.PresentationModel
         /// <param name="mealButtonIndex">按鈕序號</param>
         /// <param name="formData">ViewModel</param>
         /// <returns></returns>
-        public bool GetButtonOption(int totalButtonNumber, int mealButtonIndex, Homework1.Model.FormData formData)
+        public bool GetButtonOption(int totalButtonNumber, int mealButtonIndex, FormData formData)
         {
-            if (mealButtonIndex / MAX_BUTTON_NUMBER == formData.nowPage - 1)
+            if (mealButtonIndex / Constant.MAX_MEAL_BUTTON_NUMBER == formData.NowPage - 1)
             {
                 return true;
             }

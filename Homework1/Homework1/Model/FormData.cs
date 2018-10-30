@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,13 +12,13 @@ namespace Homework1.Model
         const int MAX_BUTTON_NUMBER = 9;
         public FormData()
         {
-            this.nowPage = 1;
-            this.totalPrice = 0;
+            this.NowPage = 1;
+            this.TotalPrice = 0;
         }
         /// <summary>
         /// 總頁數
         /// </summary>
-        public int totalPage
+        public int TotalPage
         {
             get;
             set;
@@ -25,7 +26,7 @@ namespace Homework1.Model
         /// <summary>
         /// 目前頁數
         /// </summary>
-        public int nowPage
+        public int NowPage
         {
             get;
             set;
@@ -33,7 +34,7 @@ namespace Homework1.Model
         /// <summary>
         /// 總價格
         /// </summary>
-        public int totalPrice
+        public int TotalPrice
         {
             get;
             set;
@@ -45,7 +46,7 @@ namespace Homework1.Model
         /// <returns></returns>
         public bool SetNextPageButtonEnable()
         {
-            if (this.nowPage == this.totalPage)
+            if (this.NowPage == this.TotalPage)
             {
                 return false;
             }
@@ -58,12 +59,12 @@ namespace Homework1.Model
         /// <param name="formData"></param>
         public int SetTotalOrderListPrice(List<Meal> orderMeal)
         {
-            totalPrice = 0;
+            TotalPrice = 0;
             foreach (Meal meal in orderMeal)
             {
-                totalPrice += meal.MealPrice;
+                TotalPrice += meal.MealPrice;
             }
-            return totalPrice;
+            return TotalPrice;
         }
 
         /// <summary>
@@ -72,7 +73,7 @@ namespace Homework1.Model
         /// <returns></returns>
         public string GetPageLabelText()
         {
-            return Constant.PAGE_LABEL_TEXT_PAGE + this.nowPage + Constant.SLASH + this.totalPage;
+            return Constant.PAGE_LABEL_TEXT_PAGE + this.NowPage + Constant.SLASH + this.TotalPage;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Homework1.View.PresentationModel;
+﻿using Homework1.Model;
+using Homework1.View.PresentationModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

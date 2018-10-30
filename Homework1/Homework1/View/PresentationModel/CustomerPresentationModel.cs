@@ -13,7 +13,6 @@ namespace Homework1.View.PresentationModel
     public partial class CustomerPresentationModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-
         private DataModel _dataModel = new DataModel();
         private MealButtonOption _mealButtonOption = new MealButtonOption();
 
@@ -29,12 +28,15 @@ namespace Homework1.View.PresentationModel
         {
             if (buttonName == Constant.NEXT_BUTTON)
             {
-                _dataModel.GetFormDataInstance().nowPage += 1;
+                _dataModel.GetFormDataInstance().NowPage += 1;
             }
             else
             {
-                _dataModel.GetFormDataInstance().nowPage -= 1;
+                _dataModel.GetFormDataInstance().NowPage -= 1;
             }
+            Notify(Constant.NOTIFY_PAGE_LABEL);
+            Notify(Constant.NOTIFY_PAGE_LABEL);
+            Notify(Constant.NOTIFY_PREVIOUS_PAGE);
         }
 
         /// <summary>
@@ -42,23 +44,13 @@ namespace Homework1.View.PresentationModel
         /// </summary>
         /// <param name="formData"></param>
         /// <returns></returns>
-        public bool SetPreviousPageButtonEnable(Homework1.Model.FormData formData)
+        public bool SetPreviousPageButtonEnable(FormData formData)
         {
-            if (formData.nowPage == 1)
+            if (formData.NowPage == 1)
             {
                 return false;
             }
             return true;
-        }
-
-        /// <summary>
-        /// 設定page label 的 Text
-        /// </summary>
-        /// <param name="formData"></param>
-        /// <returns></returns>
-        public string GetPageLabelText()
-        {
-            return _dataModel.GetFormDataInstance().GetPageLabelText();
         }
 
         /// <summary>
@@ -69,7 +61,7 @@ namespace Homework1.View.PresentationModel
         /// <returns></returns>
         public int SetTotalPrice(Homework1.Model.FormData formData, Homework1.Model.Meal meal)
         {
-            return formData.totalPrice += meal.MealPrice;
+            return formData.TotalPrice += meal.MealPrice;
         }
 
         /// <summary>
@@ -84,54 +76,13 @@ namespace Homework1.View.PresentationModel
         }
 
         /// <summary>
-        /// 取得Meal List
-        /// </summary>
-        /// <returns></returns>
-        public List<Meal> GetMealList()
-        {
-            return _dataModel.ReadFile();
-        }
-
-        /// <summary>
         /// 設定總頁數
         /// </summary>
         /// <param name="formData"></param>
-        public void SetTotalPage()
+        public void SetTotalPage(int buttonListNumber)
         {
-            _dataModel.SetTotalPage();
-            
-        }
-
-        /// <summary>
-        /// 取的DataModel
-        /// </summary>
-        /// <returns></returns>
-        public DataModel GetDataModelInstance()
-        {
-            return _dataModel;
-        }
-
-        /// <summary>
-        /// 設定上一頁按鈕狀態
-        /// </summary>
-        /// <param name="formData"></param>
-        /// <returns></returns>
-        public bool SetPreviousPageButtonStatus()
-        {
-            if (_dataModel.GetFormDataInstance().nowPage == 1)
-            {
-                return false;
-            }
-            return true;
-        }
-
-        /// <summary>
-        /// 設定下一頁按鈕狀態
-        /// </summary>
-        /// <returns></returns>
-        public bool IsNextPageButtonEnable()
-        {
-            return _dataModel.GetFormDataInstance().SetNextPageButtonEnable();
+            _dataModel.SetTotalPage(buttonListNumber);
+            Notify(Constant.NOTIFY_PAGE_LABEL);
         }
 
         /// <summary>
@@ -169,6 +120,23 @@ namespace Homework1.View.PresentationModel
             else
             {
                 return new Point(Constant.INITIAL_X + Constant.SPACING + Constant.SPACING, Constant.INITIAL_Y + mealButtonOption.GetVariable(buttonIndex));
+            }
+        }
+
+        /// <summary>
+        /// 設定Add Button Enable
+        /// </summary>
+        public void GetAddButtonOption(bool addButtonOption)
+        {
+            if (!addButtonOption)
+            {
+                _isAddButtonEnabled = false;
+                Notify(Constant.NOTIFY_ADD_BUTTON);
+            }
+            else
+            {
+                _isAddButtonEnabled = _dataModel.CheckMealInOrderList();
+                Notify(Constant.NOTIFY_ADD_BUTTON);
             }
         }
     }

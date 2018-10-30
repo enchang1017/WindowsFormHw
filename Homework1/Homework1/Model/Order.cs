@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -10,11 +11,7 @@ namespace Homework1.Model
 {
     public class Order
     {
-        public Order()
-        {
-            this.OrderMealList = new List<Meal>();
-        }
-
+        private List<Meal> _orderList = new List<Meal>();
         public Meal SelectedMeal
         {
             get;
@@ -23,8 +20,10 @@ namespace Homework1.Model
 
         public List<Meal> OrderMealList
         {
-            get;
-            set;
+            get
+            {
+                return _orderList;
+            }
         }
     }
 }

@@ -52,6 +52,7 @@
     <Compile Include="CustomerSide.Designer.cs">
       <DependentUpon>CustomerSide.cs</DependentUpon>
     </Compile>
+    <Compile Include="Model\Category.cs" />
     <Compile Include="Model\Constant.cs" />
     <Compile Include="Model\FormData.cs" />
     <Compile Include="Model\Meal.cs" />
@@ -68,6 +69,9 @@
     <Compile Include="StartUpForm.Designer.cs">
       <DependentUpon>StartUpForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\Forms\CustomerSideEvent.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="View\PresentationModel\CustomerPresentationModel.cs" />
     <Compile Include="Model\Order.cs" />
     <Compile Include="Program.cs" />
@@ -75,6 +79,8 @@
     <Compile Include="Model\DataModel.cs" />
     <Compile Include="View\PresentationModel\CustomerPresentationModelPartical.cs" />
     <Compile Include="View\PresentationModel\MealButtonOption.cs" />
+    <Compile Include="View\PresentationModel\RestaurantSidePresentationModel.cs" />
+    <Compile Include="View\PresentationModel\RestaurantSidePresentationModelPropoty.cs" />
     <EmbeddedResource Include="CustomerSide.resx">
       <DependentUpon>CustomerSide.cs</DependentUpon>
     </EmbeddedResource>

@@ -29,16 +29,20 @@
         private void InitializeComponent()
         {
             this._orderDataGridView = new System.Windows.Forms.DataGridView();
-            this._deleteButton = new System.Windows.Forms.DataGridViewButtonColumn();
-            this._orderNameColumns = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this._orderPriceColumns = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this._totalLabel = new System.Windows.Forms.Label();
             this._mealGroupBox = new System.Windows.Forms.GroupBox();
+            this._categoryTabControl = new System.Windows.Forms.TabControl();
             this._mealDescriptionBox = new System.Windows.Forms.RichTextBox();
             this._addButton = new System.Windows.Forms.Button();
             this._previousPageButton = new System.Windows.Forms.Button();
             this._nextPageButton = new System.Windows.Forms.Button();
             this._pageLabel = new System.Windows.Forms.Label();
+            this._deleteButton = new System.Windows.Forms.DataGridViewButtonColumn();
+            this._orderNameColumns = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._category = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._orderPriceColumns = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._quantity = new DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn();
+            this._subtotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this._orderDataGridView)).BeginInit();
             this._mealGroupBox.SuspendLayout();
             this.SuspendLayout();
@@ -50,33 +54,17 @@
             this._orderDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this._deleteButton,
             this._orderNameColumns,
-            this._orderPriceColumns});
+            this._category,
+            this._orderPriceColumns,
+            this._quantity,
+            this._subtotal});
             this._orderDataGridView.Location = new System.Drawing.Point(565, 26);
             this._orderDataGridView.Name = "_orderDataGridView";
             this._orderDataGridView.RowHeadersVisible = false;
             this._orderDataGridView.Size = new System.Drawing.Size(540, 731);
             this._orderDataGridView.TabIndex = 0;
             this._orderDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ClickDataGridViewCellContent);
-            // 
-            // _deleteButton
-            // 
-            this._deleteButton.HeaderText = "Delete";
-            this._deleteButton.Name = "_deleteButton";
-            this._deleteButton.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this._deleteButton.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this._deleteButton.Width = 80;
-            // 
-            // _orderNameColumns
-            // 
-            this._orderNameColumns.HeaderText = "Name";
-            this._orderNameColumns.Name = "_orderNameColumns";
-            this._orderNameColumns.Width = 230;
-            // 
-            // _orderPriceColumns
-            // 
-            this._orderPriceColumns.HeaderText = "Unit Price";
-            this._orderPriceColumns.Name = "_orderPriceColumns";
-            this._orderPriceColumns.Width = 230;
+            //this._orderDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.ChangeRowData);
             // 
             // _totalLabel
             // 
@@ -93,6 +81,7 @@
             // 
             // _mealGroupBox
             // 
+            this._mealGroupBox.Controls.Add(this._categoryTabControl);
             this._mealGroupBox.Controls.Add(this._mealDescriptionBox);
             this._mealGroupBox.Controls.Add(this._addButton);
             this._mealGroupBox.Controls.Add(this._previousPageButton);
@@ -105,17 +94,27 @@
             this._mealGroupBox.TabStop = false;
             this._mealGroupBox.Text = "Meals";
             // 
+            // _categoryTabControl
+            // 
+            this._categoryTabControl.Location = new System.Drawing.Point(6, 19);
+            this._categoryTabControl.Name = "_categoryTabControl";
+            this._categoryTabControl.SelectedIndex = 0;
+            this._categoryTabControl.Size = new System.Drawing.Size(502, 520);
+            this._categoryTabControl.TabIndex = 5;
+            this._categoryTabControl.SelectedIndexChanged += new System.EventHandler(this.ClickMealTabPage);
+            // 
             // _mealDescriptionBox
             // 
-            this._mealDescriptionBox.Location = new System.Drawing.Point(6, 579);
+            this._mealDescriptionBox.Location = new System.Drawing.Point(6, 545);
             this._mealDescriptionBox.Name = "_mealDescriptionBox";
             this._mealDescriptionBox.ReadOnly = true;
-            this._mealDescriptionBox.Size = new System.Drawing.Size(502, 80);
+            this._mealDescriptionBox.Size = new System.Drawing.Size(502, 114);
             this._mealDescriptionBox.TabIndex = 4;
             this._mealDescriptionBox.Text = "";
             // 
             // _addButton
             // 
+            this._addButton.Enabled = false;
             this._addButton.ForeColor = System.Drawing.SystemColors.ControlText;
             this._addButton.Location = new System.Drawing.Point(389, 668);
             this._addButton.Name = "_addButton";
@@ -156,6 +155,54 @@
             this._pageLabel.TabIndex = 0;
             this._pageLabel.Text = "label1";
             // 
+            // _deleteButton
+            // 
+            this._deleteButton.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this._deleteButton.HeaderText = "Delete";
+            this._deleteButton.Name = "_deleteButton";
+            this._deleteButton.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this._deleteButton.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this._deleteButton.Width = 63;
+            // 
+            // _orderNameColumns
+            // 
+            this._orderNameColumns.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this._orderNameColumns.HeaderText = "Name";
+            this._orderNameColumns.Name = "_orderNameColumns";
+            this._orderNameColumns.ReadOnly = true;
+            // 
+            // _category
+            // 
+            this._category.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this._category.HeaderText = "Category";
+            this._category.Name = "_category";
+            this._category.ReadOnly = true;
+            // 
+            // _orderPriceColumns
+            // 
+            this._orderPriceColumns.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this._orderPriceColumns.HeaderText = "Unit Price";
+            this._orderPriceColumns.Name = "_orderPriceColumns";
+            this._orderPriceColumns.ReadOnly = true;
+            // 
+            // _quantity
+            // 
+            this._quantity.HeaderText = "Qty";
+            this._quantity.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this._quantity.Name = "_quantity";
+            this._quantity.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this._quantity.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // _subtotal
+            // 
+            this._subtotal.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this._subtotal.HeaderText = "Subtotal";
+            this._subtotal.Name = "_subtotal";
+            // 
             // CustomerSide
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -184,9 +231,13 @@
         private System.Windows.Forms.Button _nextPageButton;
         private System.Windows.Forms.Label _pageLabel;
         private System.Windows.Forms.RichTextBox _mealDescriptionBox;
+        private System.Windows.Forms.TabControl _categoryTabControl;
         private System.Windows.Forms.DataGridViewButtonColumn _deleteButton;
         private System.Windows.Forms.DataGridViewTextBoxColumn _orderNameColumns;
+        private System.Windows.Forms.DataGridViewTextBoxColumn _category;
         private System.Windows.Forms.DataGridViewTextBoxColumn _orderPriceColumns;
+        private DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn _quantity;
+        private System.Windows.Forms.DataGridViewTextBoxColumn _subtotal;
     }
 }
 

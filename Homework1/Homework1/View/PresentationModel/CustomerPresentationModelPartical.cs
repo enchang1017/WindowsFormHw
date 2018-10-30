@@ -12,6 +12,7 @@ namespace Homework1.View.PresentationModel
 {
     public partial class CustomerPresentationModel : INotifyPropertyChanged
     {
+        private bool _isAddButtonEnabled = false;
         /// <summary>
         /// 通知畫面更改 DataBinding
         /// </summary>
@@ -26,7 +27,49 @@ namespace Homework1.View.PresentationModel
         {
             get
             {
-                return Constant.TOTAL_PRICE + _dataModel.GetFormDataInstance().totalPrice + Constant.DOLLARS;
+                return Constant.TOTAL_PRICE + _dataModel.GetFormDataInstance().TotalPrice + Constant.DOLLARS;
+            }
+        }
+
+        public string PageLabel
+        {
+            get
+            {
+                return _dataModel.GetFormDataInstance().GetPageLabelText();
+            }
+        }
+
+        public bool IsPreviousPageEnable
+        {
+            get
+            {
+                if (_dataModel.GetFormDataInstance().NowPage == 1)
+                {
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        public bool IsNextPageEnable
+        {
+            get
+            {
+                if (_dataModel.GetFormDataInstance().NowPage == _dataModel.GetFormDataInstance().TotalPage)
+                {
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        public bool IsAddButtonEnable
+        {
+            get
+            {
+                if (_isAddButtonEnabled)
+                    return true;
+                return false;
             }
         }
     }
