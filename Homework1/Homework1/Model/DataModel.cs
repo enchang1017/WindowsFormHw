@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,15 +9,18 @@ using Homework1.Model;
 
 namespace Homework1.Model
 {
-    public class DataModel
+    public partial class DataModel
     {
-        public event ModelChangedEventHandler ModelChanged;
+        public event ModelChangedEventHandler _modelChanged;
+        public event ModelChangedEventHandler _categoryChanged;
+        public event ModelChangedEventHandler _orderListAdd;
         public delegate void ModelChangedEventHandler();
         private Order _order = new Order();
         private FormData _formData = new FormData();
         private BindingList<Meal> _mealList = new BindingList<Meal>();
         private BindingList<Category> _categories = new BindingList<Category>();
-
+        private BindingList<string> _categoryUsingList = new BindingList<string>();
+        private List<int> _usingListIndex = new List<int>();
         MealListFactory _mealListFactory = new MealListFactory();
 
         public DataModel()
@@ -29,34 +33,27 @@ namespace Homework1.Model
         /// </summary>
         /// <param name="meal"></param>
         /// <returns></returns>
-        public void SetSelectedMeal(int ButtonIndex)
+        public void SetSelectedMeal(int buttonIndex)
         {
-            if (ButtonIndex == Constant.SELECTED_MEAL_INITIAL)
+            if (buttonIndex == Constant.SELECTED_MEAL_INITIAL)
             {
                 _order.SelectedMeal = new Meal();
             }
             else
             {
-                _order.SelectedMeal = _mealList[ButtonIndex];
+                _order.SelectedMeal = _mealList[buttonIndex];
             }
         }
 
         /// <summary>
-        /// 取的選取Meal
+        /// 當OrderList新增 並綁訂事件
         /// </summary>
-        /// <returns></returns>
-        public Meal GetSelectedMeal()
+        public void AddOrderList()
         {
-            return _order.SelectedMeal;
-        }
-
-        /// <summary>
-        /// 取得訂購單
-        /// </summary>
-        /// <returns></returns>
-        public List<Meal> GetOrderList()
-        {
-            return _order.OrderMealList;
+            Meal meal = _order.SelectedMeal;
+            meal._modelChanged += UpdateSubtotal;
+            _order.OrderMealList.Add(meal);
+            NotifyCategory();
         }
 
         /// <summary>
@@ -66,7 +63,8 @@ namespace Homework1.Model
         /// <returns></returns>
         public void ReadFile()
         {
-            _mealListFactory.ReadData(_mealList, _categories);
+            ReadData(_mealList, _categories);
+            _mealListFactory.SetMealDescription(_mealList);
             SetMealImage();
         }
 
@@ -78,15 +76,6 @@ namespace Homework1.Model
         public string CombineButtonText(int mealButtonListIndex)
         {
             return _mealList[mealButtonListIndex].MealName + Constant.WRAP + Constant.MONEY_SYMBOL + _mealList[mealButtonListIndex].MealPrice + Constant.DOLLARS;
-        }
-
-        /// <summary>
-        /// 回傳FormData
-        /// </summary>
-        /// <returns></returns>
-        public FormData GetFormDataInstance()
-        {
-            return _formData;
         }
 
         /// <summary>
@@ -108,7 +97,7 @@ namespace Homework1.Model
         /// <summary>
         /// 設定圖片路徑
         /// </summary>
-        public void SetMealImage()
+        private void SetMealImage()
         {
             for (int i = 0; i < _mealList.Count; i++)
             {
@@ -116,12 +105,18 @@ namespace Homework1.Model
             }
         }
 
+        //呼叫前端更新總價格
+        public void UpdateSubtotal()
+        {
+            NotifyObserver();
+        }
+
         /// <summary>
         /// 取得頁數正確
         /// </summary>
         public bool GetCurrentPage(string tabPageText, int number)
         {
-            if (this._mealList[number].Category.CategoryName == tabPageText)
+            if (_mealList[number].Category.ToString() == tabPageText)
             {
                 return true;
             }
@@ -131,44 +126,63 @@ namespace Homework1.Model
         /// <summary>
         /// 檢查是否選擇的菜單已在訂單內
         /// </summary>
-        public bool CheckMealInOrderList()
+        public bool IsMealInOrderList()
         {
-            foreach (Meal meal in _order.OrderMealList)
-            {
-                if (meal == _order.SelectedMeal)
-                    return false;
-            }
-            return true;
+            return _order.CheckMealInOrderList();
         }
 
-        public BindingList<Meal> MealsList
+        //取得使用的菜單
+        public BindingList<string> GetCategoryNameInList(int selectedItem)
         {
-            get
+            _usingListIndex.Clear();
+            _categoryUsingList.Clear();
+            for (int i = 0; i < _mealList.Count; i++)
             {
-                return _mealList;
+                if (_mealList[i].Category.ToString() == _categories[selectedItem].CategoryName)
+                {
+                    _categoryUsingList.Add(_mealList[i].MealName);
+                    _usingListIndex.Add(i);
+                }
             }
+            return _categoryUsingList;
         }
 
-        public BindingList<Category> CategoriesList
+        //新增餐點
+        public void AddNewMeal(string[] mealInformation)
         {
-            get
+            Meal meal = new Meal();
+            meal._modelChanged += UpdateSubtotal;
+            meal.MealName = mealInformation[0];
+            meal.MealPrice = Int32.Parse(mealInformation[Constant.MEAL_PRICE]);
+            meal.ImagePath = mealInformation[Constant.MEAL_PATH];
+            foreach (Category categoryName in _categories)
             {
-                return _categories;
+                if (categoryName.CategoryName == mealInformation[Constant.MEAL_CATEGORY])
+                    meal.Category = categoryName;
             }
+            meal.MealDescription = mealInformation[Constant.MEAL_DESCRIPTION];
+            _mealList.Add(meal);
+            NotifyObserver();
         }
 
-        public Order GetOrder
+        //更改類別名稱
+        public void ChangeCategoryName(string newCategoryName, int selectedIndex)
         {
-            get
-            {
-                return _order;
-            }
+            Category category = new Category();
+            category.CategoryName = newCategoryName;
+            SetMealListCategory(selectedIndex, category);
+            _categories[selectedIndex] = category;
+            NotifyCategoryChange();
         }
-        //Oberserve
-        private void NotifyObserver()
+
+        //新增類別
+        public void AddCategory(string newCategoryName)
         {
-            if (ModelChanged != null)
-                ModelChanged();
+            Category category = new Category();
+            category.CategoryName = newCategoryName;
+            _categories.Add(category);
+            NotifyCategoryChange();
         }
+
     }
 }

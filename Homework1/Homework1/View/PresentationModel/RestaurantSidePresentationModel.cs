@@ -15,30 +15,60 @@ namespace Homework1.View.PresentationModel
         public event PropertyChangedEventHandler PropertyChanged;
         private DataModel _dataModel = new DataModel();
         private BindingList<string> _mealListData = new BindingList<string>();
-        private string _mealNameTextBoxData;
-        private int _mealPriceTextBoxData;
-        private string _mealImagePath;
+        private bool _isMealSaveButtonEnable = false;
+        private bool _isCategoryButtonEnable = false;
+        private string _mealSaveButtonText = Constant.SAVE;
+        private string _categorySaveButtonText = Constant.SAVE;
 
         public RestaurantSidePresentationModel(DataModel dataModel)
         {
             _dataModel = dataModel;
         }
 
-        public void GetMealManagerGroupBoxData(int number)
+        //更改後把Save 按鈕設為true
+        public void ChangeDescription()
         {
-            _mealNameTextBoxData = _dataModel.MealsList[number].MealName;
-            _mealPriceTextBoxData = _dataModel.MealsList[number].MealPrice;
-            _mealImagePath = _dataModel.MealsList[number].ImagePath;
-            NotifyMealManagerGroupBox();
+            _isMealSaveButtonEnable = true;
+            Notify(Constant.NOTIFY_SAVE_BUTTON_ENABLE);
         }
 
-        public void NotifyMealManagerGroupBox()
+        //判斷CategorySaveButton狀態
+        public void ChangeCategoryTextBoxText(string text)
         {
-            Notify(Constant.NOTIFY_MEAL_NAME_TEXT_BOX_DATA);
-            Notify(Constant.NOTIFY_MEAL_PRICE_TEXT_BOX_DATA);
-            Notify(Constant.NOTIFY_MEAL_IMAGE_PATH);
+            if (text != "")
+            {
+                _isCategoryButtonEnable = true;
+            }
+            else
+            {
+                _isCategoryButtonEnable = false;
+            }
+            Notify(Constant.NOTIFY_SAVE_CATEGORY);
         }
 
-        
+        //判斷SaveButton狀態
+        public void ChangeTextBoxText(string[] text)
+        {
+            foreach (string texts in text)
+            {
+                if (texts == Constant.INITIAL)
+                {
+                    _isMealSaveButtonEnable = false;
+                    break;
+                }
+                _isMealSaveButtonEnable = true;
+            }
+            Notify(Constant.NOTIFY_SAVE_BUTTON_ENABLE);
+        }
+
+        /// <summary>
+        /// 取得ManagerGroupBox頁面
+        /// </summary>
+        public void GetCategoryManagerGroupBox()
+        {
+            _isCategoryButtonEnable = false;
+            Notify(Constant.NOTIFY_SAVE_BUTTON_ENABLE);
+        }
+
     }
 }

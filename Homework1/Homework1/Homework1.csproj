@@ -54,6 +54,7 @@
     </Compile>
     <Compile Include="Model\Category.cs" />
     <Compile Include="Model\Constant.cs" />
+    <Compile Include="Model\DataModelPropoty.cs" />
     <Compile Include="Model\FormData.cs" />
     <Compile Include="Model\Meal.cs" />
     <Compile Include="Model\MealListFactory.cs" />
@@ -70,6 +71,9 @@
       <DependentUpon>StartUpForm.cs</DependentUpon>
     </Compile>
     <Compile Include="View\Forms\CustomerSideEvent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Forms\RestaurantSideEvent.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="View\PresentationModel\CustomerPresentationModel.cs" />
@@ -99,6 +103,8 @@
     <EmbeddedResource Include="StartUpForm.resx">
       <DependentUpon>StartUpForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Properties\DataSources\Homework1.Model.Meal.datasource" />
+    <None Include="Properties\DataSources\Homework1.Model.Order.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -113,7 +119,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\DataGridViewNumericUpDownElements\DataGridViewNumericUpDownElements.csproj">
+    <ProjectReference Include="..\..\DataGridViewNumericUpDownElements\DataGridViewNumericUpDownElements.csproj">
       <Project>{82b50731-be90-433f-bb6e-9b509c5f3b7c}</Project>
       <Name>DataGridViewNumericUpDownElements</Name>
     </ProjectReference>

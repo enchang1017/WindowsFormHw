@@ -21,24 +21,28 @@ namespace Homework1
         public CustomerSide(DataModel dataModel)
         { 
             InitializeComponent();
+            this._categoryTabControl.SelectedIndexChanged += new System.EventHandler(this.ClickMealTabPage);
             _dataModel = dataModel;
-            _dataModel.ModelChanged += UpdateView;
+            _dataModel._modelChanged += UpdateView;
+            _dataModel._categoryChanged += RefreshTabPage;
             _customerPresentationModel = new CustomerPresentationModel(_dataModel);
             GetTablePage();
+            this._orderDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.ChangeRowData);
             GetTabPagesButton(_categoryTabControl.SelectedTab);
             _totalLabel.DataBindings.Add(Constant.ITEM_TEXT, _customerPresentationModel, Constant.NOTIFY_TOTAL_PRICE);
             _pageLabel.DataBindings.Add(Constant.ITEM_TEXT, _customerPresentationModel, Constant.NOTIFY_PAGE_LABEL);
             _nextPageButton.DataBindings.Add(Constant.ITEM_ENABLE,_customerPresentationModel,Constant.NOTIFY_NEXT_PAGE);
             _previousPageButton.DataBindings.Add(Constant.ITEM_ENABLE,_customerPresentationModel,Constant.NOTIFY_PREVIOUS_PAGE);
             _addButton.DataBindings.Add(Constant.ITEM_ENABLE,_customerPresentationModel,Constant.NOTIFY_ADD_BUTTON);
+            _orderDataGridView.DataSource = _dataModel.GetOrder.OrderMealList;
         }
 
         /// <summary>
         /// 設定MealButton位置
         /// </summary>
-        public void SetMealButtonLocation(int ButtonListCount)
+        public void SetMealButtonLocation(int buttonListCount)
         {
-            for (int i = 0; i < ButtonListCount; i++)
+            for (int i = 0; i < buttonListCount; i++)
             {
                 _mealButtonList[i].Location = _customerPresentationModel.SetMealButtonLocation(i);
             }
@@ -87,13 +91,14 @@ namespace Homework1
         /// </summary>
         public void SetMealButtonInitial(TabPage tabPage, int index, Button button)
         {
-            button.Text = _customerPresentationModel.SetMealButtonText(index);
+            button.Text = _dataModel.CombineButtonText(index);
             button.Size = new Size(Constant.BUTTON_SIZE, Constant.BUTTON_SIZE);
             button.Name = index.ToString();
             button.Click += new EventHandler(this.MealButtonClick);
             button.Image = Image.FromFile(_dataModel.MealsList[index].ImagePath);
             button.TextAlign = ContentAlignment.BottomLeft;
             button.ForeColor = Color.White;
+            button.AccessibleName = index.ToString();
             _mealButtonList.Add(button);
             tabPage.Controls.Add(button);
         }
@@ -103,10 +108,11 @@ namespace Homework1
         /// </summary>
         public void GetTablePage()
         {
+            _categoryTabControl.TabPages.Clear();
             for (int i = 0; i < _dataModel.CategoriesList.Count; i++)
             {
                 TabPage tabPage = new TabPage();
-                tabPage.Text = _dataModel.CategoriesList[i].CategoryName; 
+                tabPage.Text = _dataModel.CategoriesList[i].CategoryName;
                 _categoryTabControl.TabPages.Add(tabPage);
             }
         }
@@ -114,6 +120,30 @@ namespace Homework1
         //更新頁面
         private void UpdateView()
         {
+            _customerPresentationModel.SetTotalPrice();
+            _categoryTabControl.TabPages[_tabPageIndex].Controls.Clear();
+            GetTabPagesButton(_categoryTabControl.SelectedTab);
+            if (_dataModel.GetOrder.SelectedMeal != null)
+                _mealDescriptionBox.Text = _dataModel.GetOrder.SelectedMeal.MealDescription;
+        }
+
+        //更新TabPage
+        private void RefreshTabPage()
+        {
+            _tabPageIndex = 0;
+            GetTablePage();
+            GetTabPagesButton(_categoryTabControl.SelectedTab);
+        }
+
+        //刷新按鈕，重新抓取
+        private void RefreshTabPageButton(TabControl tabControl)
+        {
+            if (tabControl.SelectedTab != null)
+            {
+                tabControl.TabPages[_tabPageIndex].Controls.Clear();
+                GetTabPagesButton(tabControl.SelectedTab);
+                _tabPageIndex = tabControl.TabPages.IndexOf(tabControl.SelectedTab);
+            }
         }
     }
 }

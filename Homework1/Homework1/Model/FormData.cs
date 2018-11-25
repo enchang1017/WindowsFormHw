@@ -57,12 +57,12 @@ namespace Homework1.Model
         /// 計算總價
         /// </summary>
         /// <param name="formData"></param>
-        public int SetTotalOrderListPrice(List<Meal> orderMeal)
+        public int SetTotalOrderListPrice(BindingList<Meal> orderMeal)
         {
             TotalPrice = 0;
             foreach (Meal meal in orderMeal)
             {
-                TotalPrice += meal.MealPrice;
+                TotalPrice += meal.Subtotal;
             }
             return TotalPrice;
         }

@@ -10,32 +10,6 @@ namespace Homework1.Model
 {
     public class MealListFactory
     {
-        const char SPLIT_CONDITION = ' ';
-        /// <summary>
-        /// 開檔讀檔 並寫入mealList
-        /// </summary>
-        /// <returns></returns>
-        public void ReadData(BindingList<Meal> mealList, BindingList<Category> categories)
-        {
-            StreamReader streamReader = new StreamReader(@"..\..\..\Data\MealData.txt");
-            while (!streamReader.EndOfStream)
-            {
-                Meal meal = new Meal();
-                string Access = streamReader.ReadLine();
-                string[] splitAccess = Access.Split(SPLIT_CONDITION);
-                meal.MealName = splitAccess[0];
-                meal.MealPrice = Int32.Parse(splitAccess[1]);
-                for (int i = 0; i < categories.Count; i++)
-                {
-                    if (categories[i].CategoryName.Equals(splitAccess[Constant.MAX_SPLIT_NUMBER]))
-                        meal.Category = categories[i];
-                }
-                mealList.Add(meal);
-            }
-            streamReader.Close();
-            SetMealDescription(mealList);
-        }
-
         /// <summary>
         /// 設定菜單簡介
         /// </summary>

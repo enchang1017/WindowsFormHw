@@ -12,27 +12,49 @@ namespace Homework1.View.PresentationModel
 {
     public partial class RestaurantSidePresentationModel : INotifyPropertyChanged
     {
-        public string MealImagePath
+        public string CategorySaveButtonText
         {
             get
             {
-                return _mealImagePath;
+                return _categorySaveButtonText;
+            }
+            set
+            {
+                _categorySaveButtonText = value;
+                Notify(Constant.NOTIFY_CATEGORY_SAVE);
             }
         }
 
-        public string MealPriceTextBoxData
+        public string MealSaveButtonText
         {
             get
             {
-                return _mealPriceTextBoxData.ToString();
+                return _mealSaveButtonText;
+            }
+            set
+            {
+                _mealSaveButtonText = value;
+                Notify(Constant.NOTIFY_MEAL_SAVE);
             }
         }
 
-        public string MealNameTextBoxData
+        public bool IsCategorySaveButtonEnable
         {
             get
             {
-                return _mealNameTextBoxData;
+                if (_isCategoryButtonEnable)
+                    return true;
+                return false;
+            }
+        }
+
+        public bool IsMealSaveButtonEnable
+        {
+            get
+            {
+                if (_isMealSaveButtonEnable)
+                    return true;
+                return false;
             }
         }
 

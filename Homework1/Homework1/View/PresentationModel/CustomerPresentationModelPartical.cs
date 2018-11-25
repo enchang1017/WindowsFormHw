@@ -27,7 +27,7 @@ namespace Homework1.View.PresentationModel
         {
             get
             {
-                return Constant.TOTAL_PRICE + _dataModel.GetFormDataInstance().TotalPrice + Constant.DOLLARS;
+                return Constant.TOTAL_PRICE + _dataModel.FormData.TotalPrice + Constant.DOLLARS;
             }
         }
 
@@ -35,7 +35,7 @@ namespace Homework1.View.PresentationModel
         {
             get
             {
-                return _dataModel.GetFormDataInstance().GetPageLabelText();
+                return _dataModel.FormData.GetPageLabelText();
             }
         }
 
@@ -43,7 +43,7 @@ namespace Homework1.View.PresentationModel
         {
             get
             {
-                if (_dataModel.GetFormDataInstance().NowPage == 1)
+                if (_dataModel.FormData.NowPage == 1)
                 {
                     return false;
                 }
@@ -55,7 +55,7 @@ namespace Homework1.View.PresentationModel
         {
             get
             {
-                if (_dataModel.GetFormDataInstance().NowPage == _dataModel.GetFormDataInstance().TotalPage)
+                if (_dataModel.FormData.NowPage == _dataModel.FormData.TotalPage)
                 {
                     return false;
                 }

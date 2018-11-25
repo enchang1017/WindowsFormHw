@@ -25,7 +25,7 @@ namespace Homework1
             SetMealButtonOption();
             _addButton.Enabled = false;
             _dataModel.SetSelectedMeal(Constant.SELECTED_MEAL_INITIAL);
-            _mealDescriptionBox.Text = _dataModel.GetSelectedMeal().MealDescription;
+            _mealDescriptionBox.Text = _dataModel.GetOrder.SelectedMeal.MealDescription;
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Homework1
             SetMealButtonOption();
             _dataModel.SetSelectedMeal(Constant.SELECTED_MEAL_INITIAL);
             _customerPresentationModel.GetAddButtonOption(false);
-            _mealDescriptionBox.Text = _dataModel.GetSelectedMeal().MealDescription;
+            _mealDescriptionBox.Text = _dataModel.GetOrder.SelectedMeal.MealDescription;
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Homework1
         {
             Button button = sender as Button;
             _dataModel.SetSelectedMeal(Int32.Parse(button.Name));
-            _mealDescriptionBox.Text = _dataModel.GetSelectedMeal().MealDescription;
+            _mealDescriptionBox.Text = _dataModel.MealsList[Int32.Parse(button.Name)].MealDescription;
             _customerPresentationModel.GetAddButtonOption(true);
         }
 
@@ -62,9 +62,7 @@ namespace Homework1
         /// <param name="e"></param>
         private void AddButtonClick(object sender, EventArgs e)
         {
-            _orderDataGridView.Rows.Add(Constant.DELETE, _dataModel.GetOrder.SelectedMeal.MealName, _dataModel.GetOrder.SelectedMeal.Category.CategoryName,
-                _dataModel.GetOrder.SelectedMeal.MealPrice, _dataModel.GetOrder.SelectedMeal.Quantity,_dataModel.GetOrder.SelectedMeal.Subtotal);
-            _dataModel.GetOrderList().Add(_dataModel.GetSelectedMeal());
+            _dataModel.AddOrderList();
             _customerPresentationModel.GetAddButtonOption(false);
             _customerPresentationModel.SetTotalPrice();
         }
@@ -77,19 +75,10 @@ namespace Homework1
         private void ClickDataGridViewCellContent(object sender, DataGridViewCellEventArgs e)
         {
             var senderGrid = (DataGridView)sender;
-            Console.WriteLine(e.RowIndex);
-            Console.WriteLine(e.ColumnIndex);
-            if (senderGrid.Columns[e.ColumnIndex] == _deleteButton)
+            if (senderGrid.Columns[e.ColumnIndex] == _deleteColumns)
             {
-                _orderDataGridView.Rows.Remove(_orderDataGridView.Rows[e.RowIndex]);
-                _dataModel.GetOrderList().RemoveAt(e.RowIndex);
+                _dataModel.GetOrder.OrderMealList.RemoveAt(e.RowIndex);
                 _customerPresentationModel.SetTotalPrice();
-            }
-
-            if (_orderDataGridView.Columns[e.ColumnIndex] == _quantity)
-            {
-                Console.WriteLine(e.RowIndex);
-                Console.WriteLine(e.ColumnIndex);
             }
         }
 
@@ -97,20 +86,23 @@ namespace Homework1
         /// TabControl 切換頁面事件
         /// </summary>
         private void ClickMealTabPage(object sender, EventArgs e)
-        {
-            _dataModel.GetFormDataInstance().NowPage = 1;
+        {  
+            _dataModel.SetSelectedMeal(Constant.SELECTED_MEAL_INITIAL);
+            _mealDescriptionBox.Text = _dataModel.GetOrder.SelectedMeal.MealDescription;
+            _customerPresentationModel.GetAddButtonOption(false);
+            _dataModel.FormData.NowPage = 1;
             TabControl tabControl = (TabControl)sender;
-            tabControl.TabPages[_tabPageIndex].Controls.Clear();
-            GetTabPagesButton(tabControl.SelectedTab); 
-            _tabPageIndex = tabControl.TabPages.IndexOf(tabControl.SelectedTab);
+            RefreshTabPageButton(tabControl);
         }
 
+        /// <summary>
+        /// Qty被更改時 呼叫事件
+        /// </summary>
         private void ChangeRowData(object sender, DataGridViewCellEventArgs e)
         {
-            if (_orderDataGridView.Columns[e.ColumnIndex] == _quantity)
+            if (_orderDataGridView.Columns[e.ColumnIndex] == _quantityDataGridViewTextBoxColumn)
             {
-                Console.WriteLine(e.RowIndex);
-                Console.WriteLine(e.ColumnIndex);
+                _dataModel.GetOrder.OrderMealList[e.RowIndex].Quantity = (int)(_orderDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
             }
         }
     }
