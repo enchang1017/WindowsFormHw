@@ -377,6 +377,7 @@
             // 
             // _categoryListBox
             // 
+            this._categoryListBox.AccessibleName = "categoryListBox";
             this._categoryListBox.FormattingEnabled = true;
             this._categoryListBox.Location = new System.Drawing.Point(9, 11);
             this._categoryListBox.Name = "_categoryListBox";

@@ -18,6 +18,7 @@ namespace Homework1.Model
         private string _mealName;
         private int _mealPrice;
         private string _description;
+        private string _imagePath;
         public Meal()
         {
             this._quantity = 1;
@@ -94,8 +95,18 @@ namespace Homework1.Model
         /// </summary>
         public string ImagePath
         {
-            get;
-            set;
+            get
+            {
+                return _imagePath;
+            }
+            set
+            {
+                if (value != _imagePath)
+                {
+                    _imagePath = Constant.FORMAT_PATH + value;
+                }
+                NotifyObserver();
+            }
         }
 
         /// <summary>

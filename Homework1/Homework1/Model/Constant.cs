@@ -18,6 +18,10 @@ namespace Homework1.Model
         public const string UNIT_PRICE = "Unit Price";
         public const string DOLLARS = "元";
         public const string INITIAL = "";
+        public const string REPLACE_PATH = "\\Homework1\\bin\\Debug";
+        public const string TEST_PATH = @"\Homework1\0.png";
+        public const string TEST_PATH_FORMAT = @"\img\MealButtonImg\0.png";
+        public const string FORMAT_PATH = @"..\..\..";
         public const string PAGE_LABEL_TEXT_PAGE = "Page:";
         public const string SLASH = "/";
         public const int MAX_MEAL_BUTTON_NUMBER = 9;

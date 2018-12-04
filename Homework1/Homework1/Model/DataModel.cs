@@ -101,7 +101,7 @@ namespace Homework1.Model
         {
             for (int i = 0; i < _mealList.Count; i++)
             {
-                this._mealList[i].ImagePath = @"..\..\..\img\MealButtonImg\" + i + Constant.GET_PICTURE;
+                this._mealList[i].ImagePath = @"\img\MealButtonImg\" + i + Constant.GET_PICTURE;
             }
         }
 
@@ -154,7 +154,7 @@ namespace Homework1.Model
             meal._modelChanged += UpdateSubtotal;
             meal.MealName = mealInformation[0];
             meal.MealPrice = Int32.Parse(mealInformation[Constant.MEAL_PRICE]);
-            meal.ImagePath = mealInformation[Constant.MEAL_PATH];
+            meal.ImagePath = FormatImagePath(mealInformation[Constant.MEAL_PATH]);
             foreach (Category categoryName in _categories)
             {
                 if (categoryName.CategoryName == mealInformation[Constant.MEAL_CATEGORY])
@@ -184,5 +184,19 @@ namespace Homework1.Model
             NotifyCategoryChange();
         }
 
+        /// <summary>
+        /// 檔案路徑格式化
+        /// </summary>
+        private string FormatImagePath(string path)
+        {
+            if (path == Constant.TEST_PATH)
+            {
+                return Constant.TEST_PATH_FORMAT;
+            }
+            else
+            {
+                return  path;
+            }
+        }
     }
 }

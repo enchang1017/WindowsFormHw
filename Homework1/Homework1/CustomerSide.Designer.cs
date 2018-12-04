@@ -86,6 +86,7 @@
             // 
             // _totalLabel
             // 
+            this._totalLabel.AccessibleName = "totalPriceLabel";
             this._totalLabel.AutoSize = true;
             this._totalLabel.BackColor = System.Drawing.SystemColors.Control;
             this._totalLabel.Font = new System.Drawing.Font("新細明體", 20F, System.Drawing.FontStyle.Bold);

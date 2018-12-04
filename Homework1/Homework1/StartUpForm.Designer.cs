@@ -35,6 +35,7 @@
             // 
             // _customerSideButton
             // 
+            this._customerSideButton.AccessibleName = "Customer";
             this._customerSideButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this._customerSideButton.Location = new System.Drawing.Point(8, 7);
             this._customerSideButton.Name = "_customerSideButton";
@@ -46,6 +47,7 @@
             // 
             // _restaurantSideButton
             // 
+            this._restaurantSideButton.AccessibleName = "Restaurant";
             this._restaurantSideButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this._restaurantSideButton.Location = new System.Drawing.Point(8, 124);
             this._restaurantSideButton.Name = "_restaurantSideButton";
@@ -57,6 +59,7 @@
             // 
             // _exitButton
             // 
+            this._exitButton.AccessibleName = "Exit";
             this._exitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this._exitButton.Location = new System.Drawing.Point(578, 241);
             this._exitButton.Name = "_exitButton";
@@ -66,15 +69,16 @@
             this._exitButton.UseVisualStyleBackColor = true;
             this._exitButton.Click += new System.EventHandler(this.ClickExitButton);
             // 
-            // SetUpForm
+            // StartUpForm
             // 
+            this.AccessibleName = "StartUpForm";
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 319);
             this.Controls.Add(this._exitButton);
             this.Controls.Add(this._restaurantSideButton);
             this.Controls.Add(this._customerSideButton);
-            this.Name = "SetUpForm";
+            this.Name = "StartUpForm";
             this.Text = "SetUpForm";
             this.ResumeLayout(false);
 
